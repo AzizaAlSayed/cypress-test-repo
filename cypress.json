@@ -1,0 +1,32 @@
+{
+  "baseUrl": "https://react-redux.realworld.io/",
+  "viewportHeight": 900,
+  "viewportWidth": 1600,
+  "requestTimeout": 150000,
+  "responseTimeout": 150000,
+  "blockHosts": ["**pendo*", "**package.json"],
+  "supportFile": "cypress/support/index.ts",
+  "modifyObstructiveCode": false,
+  "defaultCommandTimeout": 6000,
+  "pageLoadTimeout": 150000,
+  "smokeTestUrl": "",
+  "smokeTestAppPath": "",
+  "video": false,
+  "trashAssetsBeforeRuns": true,
+  "projectId": "1saqt9",
+  "numTestsKeptInMemory": 5,
+  "reporter": "cypress-multi-reporters",
+  "reporterOptions": {
+    "configFile": "reporterOpts.json"
+  },
+  "chromeWebSecurity": false,
+  "env": {
+    "URL_2": "",
+    "URL_3": "",
+    "appPath": "",
+    "angular": "",
+    "react": "react/",
+    "serviceStack": "ServiceStack/",
+    "netCore": "NetCore/"
+  }
+}
