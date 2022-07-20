@@ -1,5 +1,5 @@
-import LoginActions from "@pageObjects/Login/actions";
-import LoginAssertions from "@pageObjects/Login/assertions";
+import LoginActions from "@pageObjects/siginUp/actions";
+import LoginAssertions from "@pageObjects/siginUp/assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 
 const loginActions = new LoginActions();

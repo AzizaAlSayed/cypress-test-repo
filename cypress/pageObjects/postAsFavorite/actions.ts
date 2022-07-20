@@ -1,4 +1,4 @@
-class FavoritePostsActions {
+class postAsFavoriteActions {
   openProfile() {
     cy.visit("http://demo.realworld.io/#/@larissa77");
     return this;
@@ -30,4 +30,4 @@ class FavoritePostsActions {
   }
 }
 
-export default FavoritePostsActions;
+export default postAsFavoriteActions;

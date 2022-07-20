@@ -1,4 +1,4 @@
-class LoginActions {
+class SignUpActions {
   openLoginPage(url: string) {
     cy.visit(url);
     return this;
@@ -8,13 +8,16 @@ class LoginActions {
     cy.get("input[type=email]").type(email);
     return this;
   }
+
   addPassword(password: string) {
     cy.get("input[type=password]").type(password);
     return this;
   }
+
   clickSignIn() {
     cy.contains(".btn", "Sign in").click();
     return this;
   }
 }
-export default LoginActions;
+
+export default SignUpActions;
