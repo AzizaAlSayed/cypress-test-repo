@@ -1,5 +1,5 @@
 {
-  "baseUrl": "https://react-redux.realworld.io/",
+  "baseUrl": "http://demo.realworld.io/",
   "viewportHeight": 900,
   "viewportWidth": 1600,
   "requestTimeout": 150000,
@@ -10,6 +10,8 @@
   "defaultCommandTimeout": 6000,
   "pageLoadTimeout": 150000,
   "smokeTestUrl": "",
+  "ignoreTestFiles": ["*.ts", "*.help"],
+  "testFiles": "**/*.{feature,features}",
   "smokeTestAppPath": "",
   "video": false,
   "trashAssetsBeforeRuns": true,
