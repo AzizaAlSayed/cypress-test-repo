@@ -1,5 +1,5 @@
-import LoginActions from "@pageObjects/siginUp/actions";
-import LoginAssertions from "@pageObjects/siginUp/assertions";
+import LoginActions from "@pageObjects/signIn/actions";
+import LoginAssertions from "@pageObjects/signIn/assertions";
 import "@testing-library/cypress/add-commands";
 import "cypress-file-upload";
 import "cypress-wait-until";

@@ -1,4 +1,4 @@
-class SignUpAssertions {
+class SignInAssertions {
   checkURL() {
     cy.hash().should("contain", "#/login");
     return this;
@@ -12,4 +12,4 @@ class SignUpAssertions {
   }
 }
 
-export default SignUpAssertions;
+export default SignInAssertions;
