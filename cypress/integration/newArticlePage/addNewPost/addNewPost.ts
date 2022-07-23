@@ -4,29 +4,39 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const newArticlePageActions = new NewArticlePageActions();
 const newArticlePageAssertions = new NewArticlePageAssertions();
+const title = `this is a title ${Math.random()}`;
+const about = "IDK";
+const articleContent = "Bla Bla Bla ...";
+const tags = "something";
 
 Given("The user opened the New Article page", () => {
   cy.login("larissa77j@gmail.com", "lara123");
   newArticlePageActions.openNewArticlePage();
 });
-When("The user fills in the title field with {string}", (title: string) => {
-  newArticlePageActions.addTitle(`${title} ${Math.random()}`);
+
+When("The user fills a title", () => {
+  newArticlePageActions.addTitle(title);
 });
-When("The user fills in the about field with {string}", (about: string) => {
+
+When("The user fills an about content", () => {
   newArticlePageActions.addAbout(about);
 });
-When(
-  "The user fills in the article field with {string}",
-  (articleContent: string) => {
-    newArticlePageActions.addArticle(articleContent);
-  }
-);
-When("The user fills in the tags field with {string}", (tags: string) => {
+
+When("The user fills an article content", () => {
+  newArticlePageActions.addArticle(articleContent);
+});
+
+When("The user fills a tag", () => {
   newArticlePageActions.addTags(`${tags}{enter}`);
 });
+
 When("The user clicks on Publish Article button", () => {
   newArticlePageActions.clickPublish();
 });
+
 Then("The article name should be shown in the URL", () => {
   newArticlePageAssertions.checkingTheArticlePage();
+  newArticlePageAssertions.checkingTitle(title);
+  newArticlePageAssertions.checkingArticleContent(articleContent);
+  newArticlePageAssertions.checkingTags(tags);
 });

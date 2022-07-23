@@ -1,5 +1,5 @@
-import FavoritePostsActions from "@pageObjects/FavoritePost/actions";
-import FavoritePostsAssertions from "@pageObjects/FavoritePost/assertions";
+import FavoritePostsActions from "@pageObjects/postAsFavorite/actions";
+import FavoritePostsAssertions from "@pageObjects/postAsFavorite/assertions";
 import { Given, When, Then } from "cypress-cucumber-preprocessor/steps";
 
 const favoritePostsActions = new FavoritePostsActions();

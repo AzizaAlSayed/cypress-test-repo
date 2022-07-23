@@ -1,4 +1,4 @@
-class FavoritePostsAssertions {
+class postAsFavoriteAssertion {
   checkingNavigation(tab: string) {
     let articlesURl = "http://demo.realworld.io/#/@larissa77",
       FavoritesURl = "http://demo.realworld.io/#/@larissa77/favorites",
@@ -16,4 +16,4 @@ class FavoritePostsAssertions {
     return this;
   }
 }
-export default FavoritePostsAssertions;
+export default postAsFavoriteAssertion;
