@@ -12,7 +12,7 @@ export interface NewUserResponseBody {
   username: string;
 }
 
-export interface NewArticle {
+export interface Article {
   title: string;
   description: string;
   body: string;
