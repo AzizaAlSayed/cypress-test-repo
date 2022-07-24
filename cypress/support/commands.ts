@@ -1,25 +1,22 @@
-import LoginActions from "@pageObjects/signIn/actions";
-import LoginAssertions from "@pageObjects/signIn/assertions";
 import "@testing-library/cypress/add-commands";
 import "cypress-file-upload";
 import "cypress-wait-until";
 
-const loginActions = new LoginActions();
-const loginAssertions = new LoginAssertions();
-
-Cypress.Commands.add("login", (email: string, password: string) => {
-  cy.intercept("POST", "api/users/login").as("LoginAPI");
-  loginActions.openLoginPage("#/login");
-  loginActions.addEmail(email).addPassword(password).clickSignIn();
-  cy.wait("@LoginAPI");
-  cy.wait(3000);
-  loginAssertions.checkLogedin("Home");
+Cypress.Commands.add("login", (email?: string, password?: string) => {
+  const userEmail = email || "admin-lara@test.com";
+  const userPassword = password || "adminLara";
+  cy.request("POST", "https://api.realworld.io/api/users/login", {
+    user: { email: userEmail, password: userPassword },
+  }).then((response) => {
+    localStorage.setItem("jwtToken", response.body.user.token);
+    localStorage.setItem("userInfo", response.body.user);
+  });
 });
 
 declare global {
   namespace Cypress {
     interface Chainable {
-      login: (email: string, password: string) => Cypress.Chainable;
+      login: (email?: string, password?: string) => Cypress.Chainable;
     }
   }
 }
