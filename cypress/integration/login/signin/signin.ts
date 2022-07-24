@@ -1,11 +1,11 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
-import LoginActions from "@pageObjects/siginUp/actions";
-import LoginAssertions from "@pageObjects/siginUp/assertions";
+import SignInActions from "@pageObjects/signIn/actions";
+import SignInAssertions from "@pageObjects/signIn/assertions";
 import { NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
-const loginActions = new LoginActions();
-const loginAssertions = new LoginAssertions();
+const signInActions = new SignInActions();
+const signInAssertions = new SignInAssertions();
 const sharedDataUtils = new SharedDataUtils();
 
 const user: NewUser = {
@@ -22,18 +22,18 @@ beforeEach(() => {
 });
 
 Given("The user opened the login page", () => {
-  loginActions.openLoginPage("#/login");
+  signInActions.openLoginPage("#/login");
 });
 
 When("The user tries to login with a valid email and password", () => {
-  loginActions.addEmail(user.email);
-  loginActions.addPassword(user.password);
+  signInActions.addEmail(user.email);
+  signInActions.addPassword(user.password);
 });
 
 When("The user clicks on Sign in button", () => {
-  loginActions.clickSignIn();
+  signInActions.clickSignIn();
 });
 
 Then("The {string} page should be shown", (content: string) => {
-  loginAssertions.checkLogedin(content);
+  signInAssertions.checkLogedin(content);
 });

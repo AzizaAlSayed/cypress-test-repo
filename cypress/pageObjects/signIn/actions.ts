@@ -1,4 +1,4 @@
-class SignUpActions {
+class SignInActions {
   openLoginPage(url: string) {
     cy.visit(url);
     return this;
@@ -20,4 +20,4 @@ class SignUpActions {
   }
 }
 
-export default SignUpActions;
+export default SignInActions;
