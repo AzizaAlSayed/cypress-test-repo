@@ -10,7 +10,7 @@ const articleContent = "Bla Bla Bla ...";
 const tags = "something";
 
 Given("The user opened the New Article page", () => {
-  cy.login("", "");
+  cy.login();
   newArticlePageActions.openNewArticlePage();
 });
 
