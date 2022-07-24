@@ -9,8 +9,8 @@ class NewArticlePageAssertions {
     return this;
   }
 
-  checkingTags(tags: string) {
-    cy.get(".tag-list").should("contain", tags);
+  checkingTags(tags: string[]) {
+    tags.filter((tag) => cy.get(".tag-list").should("contain", tag));
     return this;
   }
 

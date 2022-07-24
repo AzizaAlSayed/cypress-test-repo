@@ -11,7 +11,10 @@ const article: NewArticle = {
   title: `${moment().format("hmmss")} this is a conduit title post`,
   body: "this is a conduit body post",
   description: "this is a conduit description post",
-  tagList: ["this is a conduit tag post"],
+  tagList: [
+    "this is a first conduit tag post",
+    "this is a second conduit tag post",
+  ],
 };
 
 Given("The user opened the New Article page", () => {
@@ -32,7 +35,7 @@ When("The user fills an article content", () => {
 });
 
 When("The user fills a tag", () => {
-  newArticlePageActions.addTags(`${article.tagList}{enter}`);
+  newArticlePageActions.addTags(article.tagList.map((tag) => `${tag}{enter}`));
 });
 
 When("The user clicks on Publish Article button", () => {
@@ -43,6 +46,6 @@ Then("The article name should be shown in the URL", () => {
   newArticlePageAssertions.checkingTheArticlePage();
   newArticlePageAssertions.checkingTitle(article.title);
   newArticlePageAssertions.checkingArticleContent(article.body);
-  newArticlePageAssertions.checkingTags(article.tagList[0]);
+  newArticlePageAssertions.checkingTags(article.tagList);
   newArticlePageAssertions.checkingDeleteArticle();
 });
