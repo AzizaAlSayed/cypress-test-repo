@@ -1,13 +1,12 @@
+import { NewUser } from "./types";
 import moment from "moment";
-import { NewArticle } from "./types";
 
-export const createArticleBody = (article: NewArticle) => {
+export const createUserBody = (user: NewUser) => {
   return {
-    article: {
-      title: `${moment().format("hmmss")}${article.title}`,
-      description: article.description,
-      body: article.body,
-      tagList: article.tagList,
+    user: {
+      email: `${moment().format("hmmss")}${user.email}`,
+      password: user.password,
+      username: `${user.username}${moment().format("hmmss")}`,
     },
   };
 };

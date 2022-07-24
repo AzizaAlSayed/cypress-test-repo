@@ -1,9 +1,4 @@
-class SignUpAssertions {
-  checkURL() {
-    cy.hash().should("contain", "#/login");
-    return this;
-  }
-
+class SignInAssertions {
   checkLogedin(content: string) {
     cy.get("ul[show-authed=true]", { timeout: 6000 })
       .children()
@@ -12,4 +7,4 @@ class SignUpAssertions {
   }
 }
 
-export default SignUpAssertions;
+export default SignInAssertions;
