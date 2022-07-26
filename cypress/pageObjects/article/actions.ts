@@ -1,19 +1,20 @@
 class ArticleActions {
-  openArticlePage(url: string) {
-    cy.intercept("GET", "/api/profiles/**").as("profiles");
+  openArticlePage(articleSlug: string) {
     cy.intercept("GET", "/api/user").as("user");
-    cy.intercept("GET", "/api/articles**").as("articles");
-    cy.visit(url);
-    cy.wait(["@profiles", "@user", "@articles"]);
+    cy.intercept("GET", "/api/articles/**").as("articles");
+    cy.visit(`#/article/${articleSlug}`);
+    cy.wait(["@user", "@articles"]);
     return this;
   }
 
-  clickOnThePost() {
+  clickOnPost() {
     cy.get("h1").first().click();
     return this;
   }
 
   clickOnDeleteArticle() {
+    cy.intercept("GET", "/api/articles/**").as("articles");
+
     cy.get("button[ng-click='$ctrl.deleteArticle()']").first().click();
     cy.wait(["@articles"]);
     return this;

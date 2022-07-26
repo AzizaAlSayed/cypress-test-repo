@@ -21,14 +21,3 @@ export const createArticleBody = (article: Article) => {
     },
   };
 };
-
-/*export const createArticleBody = (article: Article) => {
-  return {
-    article: {
-      title: `${moment().format("hmmss")}${article.title}`,
-      description: article.description,
-      body: article.body,
-      tagList: article.tagList,
-    },
-  };
-};*/

@@ -1,4 +1,4 @@
-import { createArticleBody, createUserBody } from "@support/constants";
+import { createUserBody } from "@support/constants";
 import {
   Article,
   NewArticleResponseBody,
@@ -24,7 +24,7 @@ class SharedDataUtils {
       .request({
         method: "POST",
         url: "https://api.realworld.io/api/articles",
-        body: createArticleBody(article),
+        body: article,
         headers: {
           authorization: `Token ${localStorage.getItem("jwtToken")}`,
         },
