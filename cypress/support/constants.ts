@@ -14,10 +14,21 @@ export const createUserBody = (user: NewUser) => {
 export const createArticleBody = (article: Article) => {
   return {
     article: {
+      body: article.body,
+      description: article.description,
+      tagList: article.tagList,
+      title: `${article.title} ${moment().format("hmmss")}`,
+    },
+  };
+};
+
+/*export const createArticleBody = (article: Article) => {
+  return {
+    article: {
       title: `${moment().format("hmmss")}${article.title}`,
       description: article.description,
       body: article.body,
       tagList: article.tagList,
     },
   };
-};
+};*/
