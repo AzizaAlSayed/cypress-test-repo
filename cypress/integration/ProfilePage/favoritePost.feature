@@ -1,10 +1,9 @@
-Feature: Favorite Post  
+Feature: Make a Favorite Post
   
-  Scenario: Verify that user can make a favorite and unfavorite post 
-    Given The user opened the My Articles tab
-    When  The user clicks on the Favorite button to the first article
-    And   The user clicks on the Favorite Articles tab
-    And   The user clicks on the unfavorite button to the first article
-    Then  The Favorite Articles section should refresh 
-    And   The article should not appear in the Favorite Articles section
-    And   The article should appear in the My Articles section
+  Scenario: Verify that user can make an existing post favorite
+    Given A user logged in with an existing account
+    And   The user made an article created
+    And   The user opened their profile page
+    When  The user clicks on favorite button 
+    Then  The article counter favorite should be equal to one in the Articles tab
+    And   The article counter favorite should be equal to one in the Favorited tab
