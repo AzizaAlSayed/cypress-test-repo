@@ -1,11 +1,11 @@
-import { createUserBody } from "@support/constants";
+import { createArticleBody, createUserBody } from "@support/constants";
 import {
   ArticleResponseBody,
   Articles,
+  NewArticle,
   NewUser,
   NewUserResponseBody,
 } from "@support/types";
-
 class SharedDataUtils {
   createUser = (user: NewUser): Cypress.Chainable<NewUserResponseBody> => {
     return cy
@@ -15,6 +15,21 @@ class SharedDataUtils {
         createUserBody(user)
       )
       .then((userResult) => userResult.body.user);
+  };
+
+  createArticle = (
+    article: NewArticle
+  ): Cypress.Chainable<ArticleResponseBody> => {
+    return cy
+      .request({
+        method: "POST",
+        url: "https://api.realworld.io/api/articles",
+        body: createArticleBody(article),
+        headers: {
+          authorization: `Token ${localStorage.getItem("jwtToken")}`,
+        },
+      })
+      .then((articleResult) => articleResult.body.article);
   };
 
   getAllActiclesByAuthor = (author: string): Cypress.Chainable<Articles> => {
