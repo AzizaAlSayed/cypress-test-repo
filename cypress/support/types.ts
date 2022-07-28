@@ -19,7 +19,7 @@ export interface NewArticle {
   tagList: string[];
 }
 
-export interface NewArticleResponseBody {
+export interface ArticleResponseBody {
   slug: string;
   title: string;
   description: string;
@@ -35,4 +35,9 @@ export interface NewArticleResponseBody {
     image: string;
     following: boolean;
   };
+}
+
+export interface Articles {
+  articles: ArticleResponseBody[];
+  articlesCount: number;
 }

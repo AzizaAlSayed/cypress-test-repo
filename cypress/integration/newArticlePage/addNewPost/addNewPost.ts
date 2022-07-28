@@ -1,33 +1,44 @@
+import SharedDataUtils from "@pageObjects/dataUtils";
 import NewArticlePageActions from "@pageObjects/newArticle/actions";
 import NewArticlePageAssertions from "@pageObjects/newArticle/assertions";
+import { NewArticle } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const newArticlePageActions = new NewArticlePageActions();
 const newArticlePageAssertions = new NewArticlePageAssertions();
-const title = `this is a title ${Math.random()}`;
-const about = "IDK";
-const articleContent = "Bla Bla Bla ...";
-const tags = "something";
+const sharedDataUtils = new SharedDataUtils();
+
+const article: NewArticle = {
+  title: "Cypress Conduit Article Title",
+  body: "Cypress Conduit Article Body",
+  description: "Cypress Conduit Article Desciptions",
+  tagList: ["conduit-tag1", "conduit-tag2"],
+};
+
+beforeEach(() => {
+  cy.login().then(() => {
+    sharedDataUtils.deleteArticleByTitle(article.title);
+  });
+});
 
 Given("The user opened the New Article page", () => {
-  cy.login();
   newArticlePageActions.openNewArticlePage();
 });
 
 When("The user fills a title", () => {
-  newArticlePageActions.addTitle(title);
+  newArticlePageActions.addTitle(article.title);
 });
 
 When("The user fills an about content", () => {
-  newArticlePageActions.addAbout(about);
+  newArticlePageActions.addAbout(article.description);
 });
 
 When("The user fills an article content", () => {
-  newArticlePageActions.addArticle(articleContent);
+  newArticlePageActions.addArticle(article.body);
 });
 
 When("The user fills a tag", () => {
-  newArticlePageActions.addTags(`${tags}{enter}`);
+  newArticlePageActions.addTags(article.tagList.map((tag) => `${tag}{enter}`));
 });
 
 When("The user clicks on Publish Article button", () => {
@@ -35,8 +46,14 @@ When("The user clicks on Publish Article button", () => {
 });
 
 Then("The article name should be shown in the URL", () => {
-  newArticlePageAssertions.checkingTheArticlePage();
-  newArticlePageAssertions.checkingTitle(title);
-  newArticlePageAssertions.checkingArticleContent(articleContent);
-  newArticlePageAssertions.checkingTags(tags);
+  newArticlePageAssertions
+    .checkingTheArticlePage()
+    .checkingTitle(article.title)
+    .checkingArticleContent(article.body)
+    .checkingTags(article.tagList)
+    .checkingDeleteArticle();
+});
+
+afterEach(() => {
+  sharedDataUtils.deleteArticleByTitle(article.title);
 });

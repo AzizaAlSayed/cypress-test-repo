@@ -15,8 +15,8 @@ class NewArticlePageActions {
     cy.get("textarea").type(article);
     return this;
   }
-  addTags(tag: string) {
-    cy.get("input[type=text]").eq(2).type(tag);
+  addTags(tags: string[]) {
+    tags.forEach((tag) => cy.get("input[type=text]").eq(2).type(tag));
     return this;
   }
   clickPublish() {
