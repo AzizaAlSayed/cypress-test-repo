@@ -1,4 +1,4 @@
-class ArticleActions {
+class ProfilePageActions {
   openProfile(username: string) {
     cy.intercept("GET", "/api/user").as("user");
     cy.visit(`#/@${username}`);
@@ -11,10 +11,10 @@ class ArticleActions {
     return this;
   }
 
-  makeArticleFavorite() {
+  clickOnFavorite() {
     cy.get("favorite-btn").eq(0).click();
     return this;
   }
 }
 
-export default ArticleActions;
+export default ProfilePageActions;

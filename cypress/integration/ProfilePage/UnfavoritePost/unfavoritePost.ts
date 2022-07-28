@@ -34,30 +34,34 @@ Given("A user logged in with an existing account", () => {
   });
 });
 
-Given("The user made an article created", () => {
-  sharedDataUtils.createArticle(article);
+Given("The system has a favorited article", () => {
+  sharedDataUtils
+    .createArticle(article)
+    .then((articleResult) =>
+      sharedDataUtils.favoriteArticle(articleResult.slug)
+    );
 });
 
-Given("The user opened their profile page", () => {
-  profilePageActions.openProfile(user.username);
+Given("The user opened the Favorited tab from their profile page", () => {
+  profilePageActions.openProfile(user.username).openFavoritedTab();
 });
 
-When("The user clicks on favorite button", () => {
+When("The user clicks on unfavorite button", () => {
   profilePageActions.clickOnFavorite();
 });
 
 Then(
-  "The article counter favorite should be equal to one in the Articles tab",
+  "The article counter favorite should be equal to zero in the Favorited tab",
   () => {
-    profilePageAssertion.checkingArticleNumberFavoritesInArticlesTab("1");
+    profilePageAssertion.checkingArticleNumberFavoritesInFavoritedTab("0");
   }
 );
 
 Then(
-  "The article counter favorite should be equal to one in the Favorited tab",
+  "The article counter favorite should be equal to zero in the Articles tab",
   () => {
-    profilePageActions.openFavoritedTab();
-    profilePageAssertion.checkingArticleNumberFavoritesInFavoritedTab("1");
+    profilePageActions.openProfile(user.username);
+    profilePageAssertion.checkingArticleNumberFavoritesInArticlesTab("0");
   }
 );
 
