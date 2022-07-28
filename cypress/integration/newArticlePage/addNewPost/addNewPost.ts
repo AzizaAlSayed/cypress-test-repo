@@ -1,24 +1,27 @@
+import SharedDataUtils from "@pageObjects/dataUtils";
 import NewArticlePageActions from "@pageObjects/newArticle/actions";
 import NewArticlePageAssertions from "@pageObjects/newArticle/assertions";
 import { NewArticle } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
-import moment from "moment";
 
 const newArticlePageActions = new NewArticlePageActions();
 const newArticlePageAssertions = new NewArticlePageAssertions();
+const sharedDataUtils = new SharedDataUtils();
 
 const article: NewArticle = {
-  title: `${moment().format("hmmss")} this is a conduit title post`,
-  body: "this is a conduit body post",
-  description: "this is a conduit description post",
-  tagList: [
-    "this is a first conduit tag post",
-    "this is a second conduit tag post",
-  ],
+  title: "Cypress Conduit Article Title",
+  body: "Cypress Conduit Article Body",
+  description: "Cypress Conduit Article Desciptions",
+  tagList: ["conduit-tag1", "conduit-tag2"],
 };
 
+beforeEach(() => {
+  cy.login().then(() => {
+    sharedDataUtils.deleteArticleByTitle(article.title);
+  });
+});
+
 Given("The user opened the New Article page", () => {
-  cy.login();
   newArticlePageActions.openNewArticlePage();
 });
 
@@ -43,9 +46,14 @@ When("The user clicks on Publish Article button", () => {
 });
 
 Then("The article name should be shown in the URL", () => {
-  newArticlePageAssertions.checkingTheArticlePage();
-  newArticlePageAssertions.checkingTitle(article.title);
-  newArticlePageAssertions.checkingArticleContent(article.body);
-  newArticlePageAssertions.checkingTags(article.tagList);
-  newArticlePageAssertions.checkingDeleteArticle();
+  newArticlePageAssertions
+    .checkingTheArticlePage()
+    .checkingTitle(article.title)
+    .checkingArticleContent(article.body)
+    .checkingTags(article.tagList)
+    .checkingDeleteArticle();
+});
+
+afterEach(() => {
+  sharedDataUtils.deleteArticleByTitle(article.title);
 });
