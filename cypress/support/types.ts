@@ -13,10 +13,10 @@ export interface NewUserResponseBody {
 }
 
 export interface NewArticle {
-  title: string;
-  description: string;
   body: string;
+  description: string;
   tagList?: string[];
+  title: string;
 }
 
 export interface ArticleResponseBody {
@@ -37,7 +37,7 @@ export interface ArticleResponseBody {
   };
 }
 
-export interface Articles {
+export interface AllArticlesByAuthorResponse {
   articles: ArticleResponseBody[];
   articlesCount: number;
 }
