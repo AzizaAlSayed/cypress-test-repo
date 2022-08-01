@@ -1,4 +1,4 @@
-class ArticleActions {
+class ArticlePageActions {
   openArticlePage(articleSlug: string) {
     cy.intercept("GET", "/api/user").as("user");
     cy.intercept("GET", "/api/articles/**").as("articles");
@@ -21,4 +21,4 @@ class ArticleActions {
   }
 }
 
-export default ArticleActions;
+export default ArticlePageActions;

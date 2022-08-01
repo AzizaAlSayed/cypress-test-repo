@@ -1,4 +1,4 @@
-class SignInAssertions {
+class SignInPageAssertions {
   checkLogedin(content: string) {
     cy.get("ul[show-authed=true]", { timeout: 6000 })
       .children()
@@ -7,4 +7,4 @@ class SignInAssertions {
   }
 }
 
-export default SignInAssertions;
+export default SignInPageAssertions;
