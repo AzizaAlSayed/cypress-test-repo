@@ -11,7 +11,7 @@ class ProfilePageActions {
     return this;
   }
 
-  makeArticleFavorite() {
+  clickOnFavorite() {
     cy.get("favorite-btn").eq(0).click();
     return this;
   }

@@ -1,12 +1,12 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
-import ProfilePageActions from "@pageObjects/profile/actions";
+import ProfileActions from "@pageObjects/profile/actions";
 import ProfilePageAssertion from "@pageObjects/profile/assertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
-const profilePageActions = new ProfilePageActions();
-const profilePageAssertion = new ProfilePageAssertion();
+const profileActions = new ProfileActions();
+const profileAssertion = new ProfilePageAssertion();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -21,6 +21,8 @@ const article: NewArticle = {
   tagList: ["conduit-tag1", "conduit-tag2"],
 };
 
+let articleSlug: string;
+
 beforeEach(() => {
   sharedDataUtils.createUser(user).then((userResult) => {
     user.username = userResult.username;
@@ -34,30 +36,34 @@ Given("A user logged in with an existing account", () => {
   });
 });
 
-Given("The user made an article created", () => {
-  sharedDataUtils.createArticle(article);
+Given("The system has a favorited article", () => {
+  sharedDataUtils
+    .createArticle(article)
+    .then((articleResult) =>
+      sharedDataUtils.favoriteArticle(articleResult.slug)
+    );
 });
 
-Given("The user opened their profile page", () => {
-  profilePageActions.openProfile(user.username);
+Given("The user opened the Favorited tab from their profile page", () => {
+  profileActions.openProfile(user.username).openFavoritedTab();
 });
 
-When("The user clicks on favorite button", () => {
-  profilePageActions.clickOnFavorite();
+When("The user clicks on unfavorite button", () => {
+  profileActions.clickOnFavorite();
 });
 
 Then(
-  "The article counter favorite should be equal to one in the Articles tab",
+  "The article counter favorite should be equal to zero in the Favorited tab",
   () => {
-    profilePageAssertion.checkingArticleNumberFavoritesInArticlesTab("1");
+    profileAssertion.checkingArticleNumberFavoritesInFavoritedTab("0");
   }
 );
 
 Then(
-  "The article counter favorite should be equal to one in the Favorited tab",
+  "The article counter favorite should be equal to zero in the Articles tab",
   () => {
-    profilePageActions.openFavoritedTab();
-    profilePageAssertion.checkingArticleNumberFavoritesInFavoritedTab("1");
+    profileActions.openProfile(user.username);
+    profileAssertion.checkingArticleNumberFavoritesInArticlesTab("0");
   }
 );
 
