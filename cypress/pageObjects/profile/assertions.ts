@@ -1,4 +1,4 @@
-class ArticleAssertion {
+class ProfileAssertion {
   checkingArticleNumberFavoritesInArticlesTab(counter: string) {
     cy.get("ng-transclude ").find(".ng-binding").should("contain", counter);
     return this;
@@ -11,5 +11,11 @@ class ArticleAssertion {
       .should("contain", counter);
     return this;
   }
+
+  openProfile(username: string) {
+    cy.url.should("contain", `#/@${username}`);
+
+    return this;
+  }
 }
-export default ArticleAssertion;
+export default ProfileAssertion;
