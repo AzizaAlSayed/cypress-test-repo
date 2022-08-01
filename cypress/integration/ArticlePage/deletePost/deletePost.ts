@@ -1,13 +1,13 @@
 import ArticleActions from "@pageObjects/article/actions";
 import SharedDataUtils from "@pageObjects/dataUtils";
-import ProfileActions from "@pageObjects/profile/actions";
-import ProfileAssertions from "@pageObjects/profile/assertions";
-import { Article, NewUser } from "@support/types";
+import ProfilePageActions from "@pageObjects/profile/actions";
+import ProfilePageAssertions from "@pageObjects/profile/assertions";
+import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const articleActions = new ArticleActions();
-const profileAssertions = new ProfileAssertions();
-const profileActions = new ProfileActions();
+const profileAssertions = new ProfilePageAssertions();
+const profileActions = new ProfilePageActions();
 const sharedDataUtils = new SharedDataUtils();
 
 const user: NewUser = {
@@ -16,7 +16,7 @@ const user: NewUser = {
   password: "123456",
 };
 
-const article: Article = {
+const article: NewArticle = {
   title: "this is a conduit title post",
   body: "this is a conduit body post",
   description: "this is a conduit description post",
@@ -51,6 +51,10 @@ When("The user clicks on the Delete Article button", () => {
 });
 
 Then("The post should be deleted", () => {
-  profileActions.openProfilePage(`#/@${user.username}`);
+  profileActions.openProfile(user.username);
   profileAssertions.checkingExistingPost(article.title);
+});
+
+afterEach(() => {
+  sharedDataUtils.deleteArticleByTitle(article.title);
 });

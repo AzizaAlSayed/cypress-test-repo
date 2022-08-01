@@ -12,14 +12,14 @@ export interface NewUserResponseBody {
   username: string;
 }
 
-export interface Article {
+export interface NewArticle {
   body: string;
   description: string;
   tagList?: string[];
   title: string;
 }
 
-export interface NewArticleResponseBody {
+export interface ArticleResponseBody {
   slug: string;
   title: string;
   description: string;
@@ -35,4 +35,9 @@ export interface NewArticleResponseBody {
     image: string;
     following: boolean;
   };
+}
+
+export interface AllArticlesByAuthorResponse {
+  articles: ArticleResponseBody[];
+  articlesCount: number;
 }

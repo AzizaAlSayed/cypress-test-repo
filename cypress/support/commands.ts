@@ -9,7 +9,7 @@ Cypress.Commands.add("login", (email?: string, password?: string) => {
     user: { email: userEmail, password: userPassword },
   }).then((response) => {
     localStorage.setItem("jwtToken", response.body.user.token);
-    localStorage.setItem("userInfo", response.body.user);
+    localStorage.setItem("userInfo", JSON.stringify(response.body.user));
   });
 });
 

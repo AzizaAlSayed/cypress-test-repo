@@ -1,5 +1,5 @@
-import { Article, NewUser } from "./types";
 import moment from "moment";
+import { NewArticle, NewUser } from "./types";
 
 export const createUserBody = (user: NewUser) => {
   return {
@@ -11,13 +11,13 @@ export const createUserBody = (user: NewUser) => {
   };
 };
 
-export const createArticleBody = (article: Article) => {
+export const createArticleBody = (article: NewArticle) => {
   return {
     article: {
-      body: article.body,
+      title: article.title,
       description: article.description,
+      body: article.body,
       tagList: article.tagList,
-      title: `${article.title} ${moment().format("hmmss")}`,
     },
   };
 };
