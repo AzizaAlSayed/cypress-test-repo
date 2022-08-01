@@ -1,11 +1,12 @@
 import { createArticleBody, createUserBody } from "@support/constants";
 import {
+  AllArticlesByAuthorResponse,
   ArticleResponseBody,
-  Articles,
   NewArticle,
   NewUser,
   NewUserResponseBody,
 } from "@support/types";
+
 class SharedDataUtils {
   createUser = (user: NewUser): Cypress.Chainable<NewUserResponseBody> => {
     return cy
@@ -32,7 +33,9 @@ class SharedDataUtils {
       .then((articleResult) => articleResult.body.article);
   };
 
-  getAllActiclesByAuthor = (author: string): Cypress.Chainable<Articles> => {
+  getAllActiclesByAuthor = (
+    author: string
+  ): Cypress.Chainable<AllArticlesByAuthorResponse> => {
     return cy
       .request({
         method: "GET",

@@ -1,11 +1,11 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
-import ProfileActions from "@pageObjects/profile/actions";
+import ProfilePageActions from "@pageObjects/profile/actions";
 import ProfileAssertion from "@pageObjects/profile/assertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
-const profileActions = new ProfileActions();
+const profileActions = new ProfilePageActions();
 const profileAssertion = new ProfileAssertion();
 
 const user: NewUser = {
