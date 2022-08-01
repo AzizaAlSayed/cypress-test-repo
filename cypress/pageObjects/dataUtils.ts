@@ -71,6 +71,19 @@ class SharedDataUtils {
         });
     });
   };
+
+  favoriteArticle = (slug: string): Cypress.Chainable<ArticleResponseBody> => {
+    return cy
+      .request({
+        method: "POST",
+        url: `https://api.realworld.io/api/articles/${slug}/favorite`,
+        body: slug,
+        headers: {
+          authorization: `Token ${localStorage.getItem("jwtToken")}`,
+        },
+      })
+      .then((articleResult) => articleResult.body);
+  };
 }
 
 export default SharedDataUtils;
