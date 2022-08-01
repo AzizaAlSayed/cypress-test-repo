@@ -1,4 +1,4 @@
-class ProfileActions {
+class ProfilePageActions {
   openProfile(username: string) {
     cy.intercept("GET", "/api/user").as("user");
     cy.visit(`#/@${username}`);
@@ -17,4 +17,4 @@ class ProfileActions {
   }
 }
 
-export default ProfileActions;
+export default ProfilePageActions;
