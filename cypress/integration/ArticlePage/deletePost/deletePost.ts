@@ -1,11 +1,11 @@
-import ArticleActions from "@pageObjects/article/actions";
+import ArticlePageActions from "@pageObjects/article/actions";
 import SharedDataUtils from "@pageObjects/dataUtils";
 import ProfilePageActions from "@pageObjects/profile/actions";
 import ProfilePageAssertions from "@pageObjects/profile/assertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
-const articleActions = new ArticleActions();
+const articlePageActions = new ArticlePageActions();
 const profilePageAssertions = new ProfilePageAssertions();
 const profilePageActions = new ProfilePageActions();
 const sharedDataUtils = new SharedDataUtils();
@@ -43,11 +43,11 @@ Given("The system has an article created by that user", () => {
 });
 
 Given("The user was at Article page", () => {
-  articleActions.openArticlePage(articleSlug);
+  articlePageActions.openArticlePage(articleSlug);
 });
 
 When("The user clicks on the Delete Article button", () => {
-  articleActions.clickOnDeleteArticle();
+  articlePageActions.clickOnDeleteArticle();
 });
 
 Then("The post should be deleted", () => {

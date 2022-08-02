@@ -1,11 +1,11 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
-import SignInActions from "@pageObjects/signIn/actions";
-import SignInAssertions from "@pageObjects/signIn/assertions";
+import SignInPageActions from "@pageObjects/signIn/actions";
+import SignInPageAssertions from "@pageObjects/signIn/assertions";
 import { NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
-const signInActions = new SignInActions();
-const signInAssertions = new SignInAssertions();
+const signInActions = new SignInPageActions();
+const signInAssertions = new SignInPageAssertions();
 const sharedDataUtils = new SharedDataUtils();
 
 const user: NewUser = {
