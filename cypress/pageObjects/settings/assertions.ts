@@ -1,36 +1,32 @@
-class SettingsAssertions {
-  checkingTheArticlePage() {
-    cy.url().should("contains", "article");
+class SettingsPageAssertions {
+  checkImgInputContainsValue(value: string, isContain = true) {
+    cy.get("input")
+      .eq(0)
+      .should(isContain ? "have.value" : "not.have.value", value);
     return this;
   }
 
-  checkingTitle(title: string) {
-    cy.get("h1").should("contain", title);
+  checkUsernameInputContainsValue(value: string, isContain = true) {
+    cy.get("input")
+      .eq(1)
+      .should(isContain ? "have.value" : "not.have.value", value);
     return this;
   }
 
-  checkingTags(tags: string[]) {
-    tags.filter((tag) => cy.get(".tag-list").should("contain", tag));
-    return this;
-  }
-
-  checkingArticleContent(articleContent: string) {
-    cy.get("div[ng-bind-html='::$ctrl.article.body']").should(
-      "contain",
-      articleContent
+  checkBioInputContainsValue(value: string, isContain = true) {
+    cy.get("textarea").should(
+      isContain ? "have.value" : "not.have.value",
+      value
     );
     return this;
   }
 
-  checkingCommintArea() {
-    cy.get("textarea").should("be.empty");
-    return this;
-  }
-
-  checkingDeleteArticle() {
-    cy.get("span.ng-scope").find("button").should("contain", " Delete Article");
+  checkEmailInputContainsValue(value: string, isContain = true) {
+    cy.get("input")
+      .eq(2)
+      .should(isContain ? "have.value" : "not.have.value", value);
     return this;
   }
 }
 
-export default SettingsAssertions;
+export default SettingsPageAssertions;

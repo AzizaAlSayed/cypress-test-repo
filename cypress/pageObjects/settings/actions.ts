@@ -1,6 +1,4 @@
-import moment from "moment";
-
-class SettingsActions {
+class SettingsPageActions {
   openSettingsPage() {
     cy.visit("#/settings");
     return this;
@@ -12,10 +10,7 @@ class SettingsActions {
   }
 
   updateUsername(username: string) {
-    cy.get("input")
-      .eq(1)
-      .clear()
-      .type(`${username}${moment().format("hmmss")}`);
+    cy.get("input").eq(1).clear().type(username);
     return this;
   }
 
@@ -36,9 +31,6 @@ class SettingsActions {
 
   clickOnUpdateSettings() {
     cy.get("button").eq(0).click();
-    cy.intercept("GET", "/api/user").as("user");
-    cy.wait("@user");
-
     return this;
   }
 
@@ -48,4 +40,4 @@ class SettingsActions {
   }
 }
 
-export default SettingsActions;
+export default SettingsPageActions;
