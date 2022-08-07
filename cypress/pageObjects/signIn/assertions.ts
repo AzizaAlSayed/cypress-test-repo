@@ -5,6 +5,11 @@ class SignInPageAssertions {
       .should("contain", content);
     return this;
   }
+
+  checkLoginURL() {
+    cy.url().should("contain", "#/login");
+    return this;
+  }
 }
 
 export default SignInPageAssertions;

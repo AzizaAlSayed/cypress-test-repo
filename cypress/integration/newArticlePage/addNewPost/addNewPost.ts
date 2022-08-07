@@ -42,15 +42,15 @@ When("The user fills a tag", () => {
 });
 
 When("The user clicks on Publish Article button", () => {
-  newArticlePageActions.clickPublish();
+  newArticlePageActions.clickOnPublishAeticle();
 });
 
 Then("The article name should be shown in the URL", () => {
   newArticlePageAssertions
     .checkingTheArticlePage()
-    .checkingTitle(article.title)
+    .checkTitleContent(article.title)
     .checkingArticleContent(article.body)
-    .checkingTags(article.tagList)
+    .checkTagsContent(article.tagList)
     .checkingDeleteArticle();
 });
 

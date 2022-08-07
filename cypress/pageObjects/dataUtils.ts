@@ -1,7 +1,13 @@
-import { createArticleBody, createUserBody } from "@support/constants";
+import {
+  createArticleBody,
+  createCommentBody,
+  createUserBody,
+} from "@support/constants";
 import {
   AllArticlesByAuthorResponse,
   ArticleResponseBody,
+  Comment,
+  CommentResponseBody,
   NewArticle,
   NewUser,
   NewUserResponseBody,
@@ -84,6 +90,21 @@ class SharedDataUtils {
       })
       .then((articleResult) => articleResult.body);
   };
-}
 
+  addComment = (
+    slug: string,
+    comment: Comment
+  ): Cypress.Chainable<CommentResponseBody> => {
+    return cy
+      .request({
+        method: "POST",
+        url: `https://api.realworld.io/api/articles/${slug}/comments`,
+        body: createCommentBody(comment),
+        headers: {
+          authorization: `Token ${localStorage.getItem("jwtToken")}`,
+        },
+      })
+      .then((commentResult) => commentResult.body.comment);
+  };
+}
 export default SharedDataUtils;
