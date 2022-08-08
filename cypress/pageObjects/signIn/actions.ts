@@ -4,18 +4,23 @@ class SignInPageActions {
     return this;
   }
 
-  addEmail(email: string) {
-    cy.get("input[type=email]").type(email);
+  addEmail(email?: string) {
+    email && cy.get("input[type=email]").type(email);
     return this;
   }
 
-  addPassword(password: string) {
-    cy.get("input[type=password]").type(password);
+  addPassword(password?: string) {
+    password && cy.get("input[type=password]").type(password);
     return this;
   }
 
   clickSignIn() {
     cy.contains(".btn", "Sign in").click();
+    return this;
+  }
+
+  clickonNeedAnAccount() {
+    cy.get("p").contains("Need an account?").click();
     return this;
   }
 }
