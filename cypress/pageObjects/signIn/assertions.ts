@@ -1,8 +1,6 @@
 class SignInPageAssertions {
   checkLogedin(content: string) {
-    cy.get("ul[show-authed=true]", { timeout: 6000 })
-      .children()
-      .should("contain", content);
+    cy.get("ul[show-authed=true]").children().should("contain", content);
     return this;
   }
 }
