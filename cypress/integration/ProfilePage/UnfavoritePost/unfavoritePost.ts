@@ -21,8 +21,6 @@ const article: NewArticle = {
   tagList: ["conduit-tag1", "conduit-tag2"],
 };
 
-let articleSlug: string;
-
 beforeEach(() => {
   sharedDataUtils.createUser(user).then((userResult) => {
     user.username = userResult.username;
@@ -55,7 +53,7 @@ When("The user clicks on unfavorite button", () => {
 Then(
   "The article counter favorite should be equal to zero in the Favorited tab",
   () => {
-    profileAssertion.checkingArticleNumberFavoritesInFavoritedTab("0");
+    profileAssertion.checkArticleNumberFavoritesInFavoritedTab("0");
   }
 );
 
@@ -63,7 +61,7 @@ Then(
   "The article counter favorite should be equal to zero in the Articles tab",
   () => {
     profileActions.openProfile(user.username);
-    profileAssertion.checkingArticleNumberFavoritesInArticlesTab("0");
+    profileAssertion.checkArticleNumberFavoritesInArticlesTab("0");
   }
 );
 

@@ -14,7 +14,6 @@ class ArticlePageActions {
 
   clickOnDeleteArticle() {
     cy.intercept("GET", "/api/articles/**").as("articles");
-
     cy.get("button[ng-click='$ctrl.deleteArticle()']").first().click();
     cy.wait(["@articles"]);
     return this;

@@ -22,7 +22,7 @@ beforeEach(() => {
 });
 
 Given("The user opened the login page", () => {
-  signInActions.openLoginPage("#/login");
+  signInActions.openLoginPage();
 });
 
 When("The user tries to login with a valid email and password", () => {

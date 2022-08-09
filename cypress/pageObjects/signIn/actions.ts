@@ -1,6 +1,6 @@
 class SignInPageActions {
-  openLoginPage(url: string) {
-    cy.visit(url);
+  openLoginPage() {
+    cy.visit("#/login");
     return this;
   }
 
@@ -15,7 +15,7 @@ class SignInPageActions {
   }
 
   clickSignIn() {
-    cy.contains(".btn", "Sign in").click();
+    cy.get("button").click();
     return this;
   }
 }

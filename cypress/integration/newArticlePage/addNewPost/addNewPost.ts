@@ -47,11 +47,11 @@ When("The user clicks on Publish Article button", () => {
 
 Then("The article name should be shown in the URL", () => {
   newArticlePageAssertions
-    .checkingTheArticlePage()
-    .checkingTitle(article.title)
-    .checkingArticleContent(article.body)
-    .checkingTags(article.tagList)
-    .checkingDeleteArticle();
+    .checkTheArticlePageExistence()
+    .checkTitleContent(article.title)
+    .checkArticleContent(article.body)
+    .checkTagsContent(article.tagList)
+    .checkDeleteArticle();
 });
 
 afterEach(() => {
