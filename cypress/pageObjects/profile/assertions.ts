@@ -4,6 +4,7 @@ class ProfilePageAssertions {
     cy.get("h1").first().should("not.contain", title);
     return this;
   }
+
   checkingArticleNumberFavoritesInArticlesTab(counter: string) {
     cy.get("ng-transclude ").find(".ng-binding").should("contain", counter);
     return this;

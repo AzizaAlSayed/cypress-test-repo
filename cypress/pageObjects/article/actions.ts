@@ -3,7 +3,7 @@ class ArticlePageActions {
     cy.intercept("GET", "/api/user").as("user");
     cy.intercept("GET", "/api/articles/**").as("articles");
     cy.visit(`#/article/${articleSlug}`);
-    cy.wait(["@user", "@articles"]);
+    cy.wait("@articles");
     return this;
   }
 
@@ -14,7 +14,6 @@ class ArticlePageActions {
 
   clickOnDeleteArticle() {
     cy.intercept("GET", "/api/articles/**").as("articles");
-
     cy.get("button[ng-click='$ctrl.deleteArticle()']").first().click();
     cy.wait(["@articles"]);
     return this;

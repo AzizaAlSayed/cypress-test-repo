@@ -41,3 +41,7 @@ export interface AllArticlesByAuthorResponse {
   articles: ArticleResponseBody[];
   articlesCount: number;
 }
+
+export interface Tags {
+  tags: string[];
+}

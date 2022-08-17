@@ -5,6 +5,7 @@ import {
   NewArticle,
   NewUser,
   NewUserResponseBody,
+  Tags,
 } from "@support/types";
 
 class SharedDataUtils {
@@ -83,6 +84,12 @@ class SharedDataUtils {
         },
       })
       .then((articleResult) => articleResult.body);
+  };
+
+  getPopularTags = (): Cypress.Chainable<Tags> => {
+    return cy
+      .request("GET", "https://api.realworld.io/api/tags")
+      .then((popularTags) => popularTags.body.tags);
   };
 }
 
