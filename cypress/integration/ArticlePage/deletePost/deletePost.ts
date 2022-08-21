@@ -52,7 +52,7 @@ When("The user clicks on the Delete Article button", () => {
 
 Then("The post should be deleted", () => {
   profilePageActions.openProfile(user.username);
-  profilePageAssertions.checkingExistingPost(article.title);
+  profilePageAssertions.checkExistingPost(article.title);
 });
 
 afterEach(() => {

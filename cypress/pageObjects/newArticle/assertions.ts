@@ -1,9 +1,4 @@
 class NewArticlePageAssertions {
-  checkingTheArticlePage() {
-    cy.url().should("contains", "article");
-    return this;
-  }
-
   checkTitleContent(title: string, isContain = true) {
     cy.get("h1").should(isContain ? "contain" : "not.contain", title);
     return this;
