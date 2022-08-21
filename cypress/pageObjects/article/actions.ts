@@ -1,9 +1,9 @@
 class ArticlePageActions {
   openArticlePage(articleSlug: string) {
-    cy.intercept("GET", "/api/user").as("user");
-    cy.intercept("GET", "/api/articles/**").as("articles");
+    //cy.intercept("GET", "/api/user").as("user");
+    //cy.intercept("GET", "/api/articles/**").as("articles");
     cy.visit(`#/article/${articleSlug}`);
-    cy.wait(["@user", "@articles"]);
+    // cy.wait(["@user", "@articles"]);
     return this;
   }
 

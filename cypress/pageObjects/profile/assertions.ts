@@ -13,6 +13,11 @@ class ProfilePageAssertions {
     cy.get("ng-transclude ").find(".ng-binding").should("contain", counter);
     return this;
   }
+
+  checkProfileURL(username?: string) {
+    cy.url().should("contain", username ? `#/@${username}` : "#/@");
+    return this;
+  }
 }
 
 export default ProfilePageAssertions;
