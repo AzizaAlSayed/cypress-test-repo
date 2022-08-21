@@ -2,6 +2,7 @@ import SharedDataUtils from "@pageObjects/dataUtils";
 import ProfileAssertion from "@pageObjects/profile/assertions";
 import SettingsPageActions from "@pageObjects/settings/actions";
 import SettingsPageAssertions from "@pageObjects/settings/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewUser, NewUserResponseBody } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 import moment from "moment";
@@ -10,6 +11,7 @@ const settingsPageActions = new SettingsPageActions();
 const settingsPageAssertions = new SettingsPageAssertions();
 const profileAssertion = new ProfileAssertion();
 const sharedDataUtils = new SharedDataUtils();
+const sharedAssertions = new SharedAssertions();
 
 const user: NewUser = {
   username: "ConduitUser",
@@ -17,12 +19,12 @@ const user: NewUser = {
   password: "123456",
 };
 
-const newUser: NewUserResponseBody = {
+const newUser: NewUser = {
   bio: "Conduit Bio",
   email: `new${moment().format("hmmss")}${user.email}`,
   image: "https://avatars1.githubusercontent.com/u/8908513?s=280&v=4",
   username: `new${moment().format("hmmss")}${user.username}`,
-  token: localStorage.getItem("jwtToken"),
+  password: "123456",
 };
 
 beforeEach(() => {
@@ -41,15 +43,15 @@ Given("The user clicked on the Settings tab", () => {
 });
 
 When("The user fills in a new valid profile picture", () => {
-  settingsPageActions.updateImg(newUser.image);
+  settingsPageActions.typeInImageInput(newUser.image);
 });
 
 When("The user clicks on the Update Settings button", () => {
-  settingsPageActions.clickOnUpdateSettings();
+  settingsPageActions.clickOnUpdateSettingsButton();
 });
 
 Then("The profile page should be opened", () => {
-  profileAssertion.checkUsernameInProfileURL(user.username);
+  sharedAssertions.checkUrlContainsValue(`#/@${user.username}`, true);
 });
 
 Then("The picture should be shown on the profile page", () => {
@@ -57,11 +59,11 @@ Then("The picture should be shown on the profile page", () => {
 });
 
 When("The user fills in a new valid username", () => {
-  settingsPageActions.updateUsername(newUser.username);
+  settingsPageActions.typeInUsernameInput(newUser.username);
 });
 
 Then("The profile should be opened", () => {
-  profileAssertion.checkUsernameInProfileURL(newUser.username);
+  sharedAssertions.checkUrlContainsValue(`#/@${newUser.username}`, true);
 });
 
 Then("The username should be shown on the profile page", () => {
@@ -69,15 +71,15 @@ Then("The username should be shown on the profile page", () => {
 });
 
 When("The user fills in a new bio", () => {
-  settingsPageActions.updateBio(newUser.bio);
+  settingsPageActions.typeInBioInput(newUser.bio);
 });
 
 Then("The bio should be shown on the profile page", () => {
-  profileAssertion.checkBioContent(newUser.bio);
+  profileAssertion.checkBioValue(newUser.bio);
 });
 
 When("The user fills in a new valid email", () => {
-  settingsPageActions.updateEmail(newUser.email);
+  settingsPageActions.typeInEmailInput(newUser.email);
 });
 
 When("The user fills in a new password", () => {
