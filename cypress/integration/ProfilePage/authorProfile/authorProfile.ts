@@ -4,6 +4,7 @@ import SharedDataUtils from "@pageObjects/dataUtils";
 import HomePageActions from "@pageObjects/home/actions";
 import ProfilePageActions from "@pageObjects/profile/actions";
 import ProfilePageAssertions from "@pageObjects/profile/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
@@ -13,6 +14,7 @@ const profilePageActions = new ProfilePageActions();
 const authorProfilePageActions = new AuthorProfilePageActions();
 const homePageActions = new HomePageActions();
 const profilePageAssertion = new ProfilePageAssertions();
+const sharedAssertions = new SharedAssertions();
 
 const authorPost: NewUser = {
   username: "ConduitAuthorPost",
@@ -79,5 +81,5 @@ When("The user clicks on author name", () => {
 });
 
 Then("The author profile should be appear", () => {
-  profilePageAssertion.checkProfileURL();
+  sharedAssertions.checkUrlContainsValue(`#/@`, true);
 });

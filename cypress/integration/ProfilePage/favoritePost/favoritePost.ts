@@ -40,6 +40,7 @@ Given("The user created an article", () => {
 
 Given("The user opened their profile page", () => {
   profilePageActions.openProfile(user.username);
+  cy.wait("@user");
 });
 
 When("The user clicks on favorite button", () => {
@@ -49,7 +50,7 @@ When("The user clicks on favorite button", () => {
 Then(
   "The article counter favorite should be equal to one in the Articles tab",
   () => {
-    profilePageAssertion.checkingArticleNumberFavoritesInArticlesTab("1");
+    profilePageAssertion.checkArticleNumberFavoritesInArticlesTab("1");
   }
 );
 
@@ -57,7 +58,7 @@ Then(
   "The article counter favorite should be equal to one in the Favorited tab",
   () => {
     profilePageActions.openFavoritedTab();
-    profilePageAssertion.checkingArticleNumberFavoritesInFavoritedTab("1");
+    profilePageAssertion.checkArticleNumberFavoritesInFavoritedTab("1");
   }
 );
 

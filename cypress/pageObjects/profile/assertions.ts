@@ -1,21 +1,36 @@
 class ProfilePageAssertions {
-  checkingExistingPost(title: string) {
+  checkExistingPost(title: string) {
     cy.get(".feed-toggle").find(".nav").children().eq(1).click();
     cy.get("h1").first().should("not.contain", title);
     return this;
   }
-  checkingArticleNumberFavoritesInArticlesTab(counter: string) {
+
+  checkArticleNumberFavoritesInArticlesTab(counter: string) {
     cy.get("ng-transclude ").find(".ng-binding").should("contain", counter);
     return this;
   }
 
-  checkingArticleNumberFavoritesInFavoritedTab(counter: string) {
+  checkArticleNumberFavoritesInFavoritedTab(counter: string) {
     cy.get("ng-transclude ").find(".ng-binding").should("contain", counter);
     return this;
   }
 
-  checkProfileURL(username?: string) {
-    cy.url().should("contain", username ? `#/@${username}` : "#/@");
+  checkUsernameContent(username: string, isContain = true) {
+    cy.get("h4").should(isContain ? "contain" : "not.contain", username);
+    return this;
+  }
+
+  checkBioValue(bio: string, isContain = true) {
+    cy.get("p.ng-binding").should(isContain ? "contain" : "not.contain", bio);
+    return this;
+  }
+
+  checkProfilePicture(newImg: string) {
+    cy.get(".user-img")
+      .invoke("attr", "ng-src")
+      .then((currentPicture) => {
+        expect(currentPicture).to.eq(newImg);
+      });
     return this;
   }
 }

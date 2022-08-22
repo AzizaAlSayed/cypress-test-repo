@@ -59,8 +59,9 @@ Given("A user was on the article page", () => {
   articlePageActions.openArticlePage(articleSlug);
 });
 
-Given("A user was on the article page", () => {
+Given("The user was on the article page", () => {
   articlePageActions.openArticlePage(articleSlug);
+  cy.wait("@user");
 });
 
 Given("A user logged in with an exisiting account", () => {
@@ -69,6 +70,7 @@ Given("A user logged in with an exisiting account", () => {
 
 Given("The user was on the author profile", () => {
   profilePageActions.openProfile(authorPost.username);
+  cy.wait("@user");
 });
 
 Given("A user was on the author profile", () => {
