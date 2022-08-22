@@ -1,3 +1,4 @@
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import SignUpPageActions from "@pageObjects/signup/actions";
 import SignUpPageAssertions from "@pageObjects/signup/assertions";
 import { NewUser } from "@support/types";
@@ -5,6 +6,7 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const signUpPageActions = new SignUpPageActions();
 const signUpPageAssertions = new SignUpPageAssertions();
+const sharedAssertions = new SharedAssertions();
 
 const validUser: NewUser = {
   username: "ConduitNewUser",
@@ -29,43 +31,39 @@ Given("A user opened the Signup page", () => {
 });
 
 When("The user clicks on Need an account? button", () => {
-  signUpPageActions.clickingOnHaveAccount();
+  signUpPageActions.clickOnHaveAnAccountLink();
 });
 
 When("The user clicks Sign up button", () => {
-  signUpPageActions.clickSignup();
+  signUpPageActions.clickSignupButton();
 });
 
 Then("The Login page should be appear", () => {
-  signUpPageAssertions.checkLoginPage();
+  sharedAssertions.checkUrlContainsValue("#/login", true);
 });
 
 When("The user fills a valid email, username and password", () => {
-  signUpPageActions.addEmail(validUser.email);
-  signUpPageActions.addUsername(validUser.username);
-  signUpPageActions.addPassword(validUser.password);
+  signUpPageActions.typeInEmailInput(validUser.email);
+  signUpPageActions.typeInUsernameInput(validUser.username);
+  signUpPageActions.typeInPasswordInput(validUser.password);
 });
 
 Then("The {string} page should be shown", (content: string) => {
   signUpPageAssertions.checkRegistration(content);
 });
 
-Given("The user kept empty fileds email, username and password", () => {
-  signUpPageActions.addEmail().addUsername().addPassword();
-});
+Given("The user kept empty fileds email, username and password", () => {});
 
 Then("An alert page should be shown {string}", (errorMassage: string) => {
   signUpPageAssertions.hasErrorContent(errorMassage);
 });
 
-When("The user keeps an empty email filed", () => {
-  signUpPageActions.addEmail();
-});
+When("The user keeps an empty email filed", () => {});
 
 When("The user fills a valid username and password", () => {
   signUpPageActions
-    .addUsername(validUser.username)
-    .addPassword(validUser.password);
+    .typeInUsernameInput(validUser.username)
+    .typeInPasswordInput(validUser.password);
 });
 
 Then(
@@ -77,16 +75,16 @@ Then(
 
 When("The user fills a taken username and a password", () => {
   signUpPageActions
-    .addUsername(exsitingUser.username)
-    .addPassword(exsitingUser.password);
+    .typeInUsernameInput(exsitingUser.username)
+    .typeInPasswordInput(exsitingUser.password);
 });
 
-When("The user keeps an empty username filed", () => {
-  signUpPageActions.addUsername();
-});
+When("The user keeps an empty username filed", () => {});
 
 When("The user fills a valid email and password", () => {
-  signUpPageActions.addEmail(validUser.email).addPassword(validUser.password);
+  signUpPageActions
+    .typeInEmailInput(validUser.email)
+    .typeInPasswordInput(validUser.password);
 });
 
 Then(
@@ -98,20 +96,22 @@ Then(
 
 When("The user fills an existing email and a password", () => {
   signUpPageActions
-    .addEmail(exsitingUser.username)
-    .addPassword(exsitingUser.password);
+    .typeInEmailInput(exsitingUser.username)
+    .typeInPasswordInput(exsitingUser.password);
 });
 
 When("The user fills an invalid email and a password", () => {
-  signUpPageActions.addEmail(invalidEmail).addPassword(exsitingUser.password);
+  signUpPageActions
+    .typeInEmailInput(invalidEmail)
+    .typeInPasswordInput(exsitingUser.password);
 });
 
-When("The user keeps an empty password filed", () => {
-  signUpPageActions.addPassword();
-});
+When("The user keeps an empty password filed", () => {});
 
 When("The user fills a valid email and username", () => {
-  signUpPageActions.addEmail(validUser.email).addUsername(validUser.username);
+  signUpPageActions
+    .typeInEmailInput(validUser.email)
+    .typeInUsernameInput(validUser.username);
 });
 
 Then(
@@ -123,61 +123,57 @@ Then(
 
 When("The user fills a valid email and a taken username", () => {
   signUpPageActions
-    .addEmail(validUser.email)
-    .addUsername(exsitingUser.username);
+    .typeInEmailInput(validUser.email)
+    .typeInUsernameInput(exsitingUser.username);
 });
 
 When("The user fills a valid username and an existing email", () => {
   signUpPageActions
-    .addEmail(exsitingUser.email)
-    .addUsername(validUser.username);
+    .typeInEmailInput(exsitingUser.email)
+    .typeInUsernameInput(validUser.username);
 });
 
 When("The user fills a valid username and an invalid email", () => {
-  signUpPageActions.addEmail(invalidEmail).addUsername(validUser.username);
+  signUpPageActions
+    .typeInEmailInput(invalidEmail)
+    .typeInUsernameInput(validUser.username);
 });
 
-When("The user keeps empty fileds password and username", () => {
-  signUpPageActions.addPassword().addUsername();
-});
+When("The user keeps empty fileds password and username", () => {});
 
 When("The user fills a valid email", () => {
-  signUpPageActions.addEmail(validUser.email);
+  signUpPageActions.typeInEmailInput(validUser.email);
 });
 
 When("The user fills an invalid email", () => {
-  signUpPageActions.addEmail(invalidEmail);
+  signUpPageActions.typeInEmailInput(invalidEmail);
 });
 
 When("The user fills an existing email", () => {
-  signUpPageActions.addEmail(exsitingUser.email);
+  signUpPageActions.typeInEmailInput(exsitingUser.email);
 });
 
-When("The user keeps empty fileds password and email", () => {
-  signUpPageActions.addEmail().addPassword();
-});
+When("The user keeps empty fileds password and email", () => {});
 
 When("The user fills a valid username", () => {
-  signUpPageActions.addUsername(validUser.username);
+  signUpPageActions.typeInUsernameInput(validUser.username);
 });
 
 When("The user fills a taken username", () => {
-  signUpPageActions.addUsername(exsitingUser.username);
+  signUpPageActions.typeInUsernameInput(exsitingUser.username);
 });
 
-When("The user keeps empty fileds email and username", () => {
-  signUpPageActions.addUsername().addEmail();
-});
+When("The user keeps empty fileds email and username", () => {});
 
 When("The user fills a password", () => {
-  signUpPageActions.addPassword(validUser.password);
+  signUpPageActions.typeInPasswordInput(validUser.password);
 });
 
 When("The user fills a valid email, taken username and a password", () => {
   signUpPageActions
-    .addPassword(validUser.password)
-    .addEmail(validUser.email)
-    .addUsername(exsitingUser.username);
+    .typeInPasswordInput(validUser.password)
+    .typeInEmailInput(validUser.email)
+    .typeInUsernameInput(exsitingUser.username);
 });
 
 Then("The username alert should be shown {string}", (errorMassage: string) => {
@@ -186,9 +182,9 @@ Then("The username alert should be shown {string}", (errorMassage: string) => {
 
 When("The user fills an invalid email, taken username and a password", () => {
   signUpPageActions
-    .addPassword(validUser.password)
-    .addEmail(invalidEmail)
-    .addUsername(exsitingUser.username);
+    .typeInPasswordInput(validUser.password)
+    .typeInEmailInput(invalidEmail)
+    .typeInUsernameInput(exsitingUser.username);
 });
 
 Then("An alert should be appear {string}", () => {
@@ -197,16 +193,16 @@ Then("An alert should be appear {string}", () => {
 
 When("The user fills an invalid email, a valid username and a password", () => {
   signUpPageActions
-    .addPassword(validUser.password)
-    .addEmail(invalidEmail)
-    .addUsername(validUser.username);
+    .typeInPasswordInput(validUser.password)
+    .typeInEmailInput(invalidEmail)
+    .typeInUsernameInput(validUser.username);
 });
 
 When("The user fills an existing email, taken username and a password", () => {
   signUpPageActions
-    .addPassword(validUser.password)
-    .addEmail(exsitingUser.email)
-    .addUsername(exsitingUser.username);
+    .typeInPasswordInput(validUser.password)
+    .typeInEmailInput(exsitingUser.email)
+    .typeInUsernameInput(exsitingUser.username);
 });
 
 Then("The username alert should be shown {string}", (errorMassage: string) => {
@@ -221,8 +217,8 @@ When(
   "The user fills an existing email, a valid username and a password",
   () => {
     signUpPageActions
-      .addPassword(validUser.password)
-      .addEmail(exsitingUser.email)
-      .addUsername(validUser.username);
+      .typeInPasswordInput(validUser.password)
+      .typeInEmailInput(exsitingUser.email)
+      .typeInUsernameInput(validUser.username);
   }
 );

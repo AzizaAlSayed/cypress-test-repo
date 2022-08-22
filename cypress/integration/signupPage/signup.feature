@@ -151,4 +151,4 @@ Feature: Signup
     Given A user opened the Signup page
     When  The user fills a valid email, username and password
     And   The user clicks Sign up button
-    Then  The "Home" page should be shown##
+    Then  The "Home" page should be shown

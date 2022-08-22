@@ -4,11 +4,6 @@ class SignUpPageAssertions {
     return this;
   }
 
-  checkLoginPage() {
-    cy.url().should("contains", "#/login");
-    return this;
-  }
-
   hasErrorContent(alert: string, isContains = true) {
     cy.get("div.ng-scope").should(
       isContains ? "contain" : "not.contain",

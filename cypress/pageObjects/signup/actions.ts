@@ -4,27 +4,27 @@ class SignUpPageActions {
     return this;
   }
 
-  clickingOnHaveAccount() {
+  clickOnHaveAnAccountLink() {
     cy.get("p").contains("Have an account?").click();
     return this;
   }
 
-  addUsername(username?: string) {
-    username && cy.get("input[type=text]").type(username);
+  typeInUsernameInput(username: string) {
+    cy.get("input[type=text]").type(username);
     return this;
   }
 
-  addEmail(email?: string) {
-    email && cy.get("input[type=email]").type(email);
+  typeInEmailInput(email: string) {
+    cy.get("input[type=email]").type(email);
     return this;
   }
 
-  addPassword(password?: string) {
-    password && cy.get("input[type=password]").type(password);
+  typeInPasswordInput(password: string) {
+    cy.get("input[type=password]").type(password);
     return this;
   }
 
-  clickSignup() {
+  clickSignupButton() {
     cy.get("button[type=submit]").click();
     return this;
   }
