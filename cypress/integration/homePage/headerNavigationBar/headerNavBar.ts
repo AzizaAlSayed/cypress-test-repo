@@ -1,5 +1,6 @@
 import ArticlePageActions from "@pageObjects/article/actions";
 import SharedDataUtils from "@pageObjects/dataUtils";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import HomePageActions from "@pageObjects/home/actions";
 import HomePageAssertions from "@pageObjects/home/assertions";
 import { NewArticle, NewUser } from "@support/types";
@@ -8,6 +9,7 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 const homePageActions = new HomePageActions();
 const homePageAssertions = new HomePageAssertions();
 const sharedDataUtils = new SharedDataUtils();
+const sharedAssertions = new SharedAssertions();
 const articlePageActions = new ArticlePageActions();
 
 const user: NewUser = {
@@ -133,29 +135,29 @@ When("The user clicks on Conduit logo", () => {
 });
 
 Then("The Sign in page should be appear", () => {
-  homePageAssertions.checkSingInPageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/login", true);
 });
 
 Then("The home page should be appear", () => {
-  homePageAssertions.checkHomePageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/", true);
 });
 
 Then("The Sign up page should be appear", () => {
-  homePageAssertions.checkSingUpPageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/register", true);
 });
 
 Then("The New Articles page should be appear", () => {
-  homePageAssertions.checkNewArticlePageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/editor/", true);
 });
 
 Then("The Settings page should be appear", () => {
-  homePageAssertions.checkSettingsPageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/settings", true);
 });
 
 Then("The User Profile page should be appear", () => {
-  homePageAssertions.checkUserProfilePageIsOpening(user.username);
+  sharedAssertions.checkUrlContainsValue(`#/@${user.username}`, true);
 });
 
 Then("The Home page should be appear", () => {
-  homePageAssertions.checkHomePageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/", true);
 });

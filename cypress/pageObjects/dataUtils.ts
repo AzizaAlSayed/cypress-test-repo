@@ -86,6 +86,21 @@ class SharedDataUtils {
       .then((articleResult) => articleResult.body);
   };
 
+  updateUser = (
+    user: NewUserResponseBody
+  ): Cypress.Chainable<ArticleResponseBody> => {
+    return cy
+      .request({
+        method: "PUT",
+        url: "https://api.realworld.io/api/user",
+        body: user,
+        headers: {
+          authorization: `Token ${localStorage.getItem("jwtToken")}`,
+        },
+      })
+      .then((userResult) => userResult.body.user);
+  };
+
   getPopularTags = (): Cypress.Chainable<Tags> => {
     return cy
       .request("GET", "https://api.realworld.io/api/tags")

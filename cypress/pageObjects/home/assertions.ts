@@ -1,34 +1,4 @@
 class HomePageAssertions {
-  checkSingInPageIsOpen() {
-    cy.url().should("contain", "#/login");
-    return this;
-  }
-
-  checkSingUpPageIsOpen() {
-    cy.url().should("contain", "#/register");
-    return this;
-  }
-
-  checkHomePageIsOpen() {
-    cy.url().should("equal", "http://demo.realworld.io/#/");
-    return this;
-  }
-
-  checkUserProfilePageIsOpening(username: string) {
-    cy.url().should("contain", `#/@${username}`);
-    return this;
-  }
-
-  checkSettingsPageIsOpen() {
-    cy.url().should("contain", "#/settings");
-    return this;
-  }
-
-  checkNewArticlePageIsOpen() {
-    cy.url().should("contain", "#/editor/");
-    return this;
-  }
-
   checkIsActivatedFeedTab(isContain = true) {
     cy.get(".nav-link").should(
       isContain ? "have.class" : "not.have.class",
