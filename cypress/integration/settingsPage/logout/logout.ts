@@ -1,12 +1,14 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
 import SettingsPageActions from "@pageObjects/settings/actions";
 import SettingsPageAssertions from "@pageObjects/settings/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
 const settingsPageActions = new SettingsPageActions();
 const settingsPageAssertions = new SettingsPageAssertions();
+const sharedAssertions = new SharedAssertions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -30,9 +32,9 @@ Given("The user was at the Settings page", () => {
 });
 
 When("The user clicks on or click here to logout button", () => {
-  settingsPageActions.clickOnLogout();
+  settingsPageActions.clickOnLogoutButton();
 });
 
 Then("The Home page should be appear", () => {
-  settingsPageAssertions.checkHoemPageIsOpen();
+  sharedAssertions.checkUrlContainsValue("#/", true);
 });
