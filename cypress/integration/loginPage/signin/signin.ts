@@ -1,4 +1,5 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import SignInPageActions from "@pageObjects/signIn/actions";
 import SignInPageAssertions from "@pageObjects/signIn/assertions";
 import { NewUser } from "@support/types";
@@ -7,6 +8,7 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 const signInActions = new SignInPageActions();
 const signInAssertions = new SignInPageAssertions();
 const sharedDataUtils = new SharedDataUtils();
+const sharedAssertions = new SharedAssertions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -31,12 +33,12 @@ Given("The user opened the Sign in page", () => {
   signInActions.openLoginPage("#/login");
 });
 
-When("The user clicks on Need an account? button", () => {
-  signInActions.clickonNeedAnAccount();
+When("The user cclickSignInButtoned an account? button", () => {
+  signInActions.clickOnNeedAnAccountLink();
 });
 
 Then("The Sign up pcheckIsLogedine appear", () => {
-  signInAssertions.checkingSignUpPageOpening();
+  sharedAssertions.checkUrlContainsValue("#/register", true);
 });
 
 Given("The user opened the login page", () => {
@@ -44,73 +46,79 @@ Given("The user opened the login page", () => {
 });
 
 When("The user tries to login with a valid email and password", () => {
-  signInActions.addEmail(user.email);
-  signInActions.addPassword(user.password);
+  signInActions.typeInEmailInput(user.email);
+  signInActions.typeInpasswordInput(user.password);
 });
 
 When("The user clicks on Sign in button", () => {
-  signInActions.clickSignIn();
+  signInActions.clickSignInButton();
 });
 
 Then("The {string} page should be shown", (content: string) => {
-  signInAssertions.checkLogedin(content);
+  signInAssertions.checkIsLoggedin(content);
 });
 
 When("The user tries to login with an invalid email and password", () => {
-  signInActions.addEmail(invalidUser.email);
-  signInActions.addPassword(invalidUser.password);
+  signInActions.typeInEmailInput(invalidUser.email);
+  signInActions.typeInpasswordInput(invalidUser.password);
 });
 
 Then(
   "An alert for invalid content should appear {string}",
   (errorMassage: string) => {
-    signInAssertions.checkError(errorMassage);
+    signInAssertions.checkErrorContent(errorMassage);
   }
 );
 
 When("The user tries to login with a valid email and invalid password", () => {
-  signInActions.addEmail(user.email);
-  signInActions.addPassword(invalidUser.password);
+  signInActions.typeInEmailInput(user.email);
+  signInActions.typeInpasswordInput(invalidUser.password);
 });
 
-When("The user tries to login with empty fields for email and password", () => {
-  signInActions.addEmail();
-  signInActions.addPassword();
+When(
+  "The user tries to login with empty fields for email and password",
+  () => {}
+);
+
+When("The user clicks on Need an account? button", () => {
+  signInActions.clickOnNeedAnAccountLink();
 });
 
 Then(
   "An alert for email and password blanks should appear {string}",
   (errorMassage: string) => {
-    signInAssertions.checkError(errorMassage);
+    signInAssertions.checkErrorContent(errorMassage);
   }
 );
 
 When(
   "The user tries to login with empty email field and fills any password",
   () => {
-    signInActions.addEmail();
-    signInActions.addPassword(user.password);
+    signInActions.typeInpasswordInput(user.password);
   }
 );
 
 Then(
   "An alert for email blank should appear {string}",
   (errorMassage: string) => {
-    signInAssertions.checkError(errorMassage);
+    signInAssertions.checkErrorContent(errorMassage);
   }
 );
 
 When(
   "The user tries to login with a valid email and empty password fields",
   () => {
-    signInActions.addEmail(user.email);
-    signInActions.addPassword();
+    signInActions.typeInEmailInput(user.email);
   }
 );
 
 Then(
   "An alert for password blank should appear {string}",
   (errorMassage: string) => {
-    signInAssertions.checkError(errorMassage);
+    signInAssertions.checkErrorContent(errorMassage);
   }
 );
+
+Then("The Sign up page should be appear", () => {
+  sharedAssertions.checkUrlContainsValue("#/register", true);
+});
