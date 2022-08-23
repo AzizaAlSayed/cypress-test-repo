@@ -37,7 +37,7 @@ Scenario: Verify that user can move to sign up page from article page to add a c
     And   Another user was on that Article page
     When  The user clicks on sign up 
     Then  The Sign up page should be appear
-    
+   
 Scenario: Verify that user can move to sign in page from article page to add a comment 
     Given The system has an article created by a user 
     And   Another user was on that Article page    

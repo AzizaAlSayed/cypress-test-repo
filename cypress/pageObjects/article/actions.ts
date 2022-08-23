@@ -3,7 +3,8 @@ class ArticlePageActions {
     cy.intercept("GET", "/api/user").as("user");
     cy.intercept("GET", "/api/articles/**").as("articles");
     cy.visit(`#/article/${articleSlug}`);
-    cy.wait(["@user", "@articles"]);
+    cy.wait(["@articles"]);
+
     return this;
   }
 
@@ -11,44 +12,44 @@ class ArticlePageActions {
     cy.visit(`#/editor/${articleSlug}`);
   }
 
-  typeComment(comment: string) {
+  typeInCommentInput(comment: string) {
     cy.get("textarea").type(comment);
     return this;
   }
 
-  clickOnDeleteComment() {
+  clickOnDeleteCommentButton() {
     cy.get("i[ng-click='$ctrl.deleteCb()']").click();
     return this;
   }
 
-  clickOnPostComment() {
+  clickOnPostCommentButton() {
     cy.get("button[type=submit]").click();
     return this;
   }
 
-  clickOnPost() {
+  clickOnPostLink() {
     cy.get("h1").first().click();
     return this;
   }
 
-  clickOnDeleteArticle() {
+  clickOnDeleteArticleButton() {
     cy.intercept("GET", "/api/articles/**").as("articles");
     cy.get("button[ng-click='$ctrl.deleteArticle()']").first().click();
     cy.wait(["@articles"]);
     return this;
   }
 
-  clickOnEditArticle() {
+  clickOnEditArticleLink() {
     cy.get("a[class='btn btn-outline-secondary btn-sm']").first().click();
     return this;
   }
 
-  clickingOnSigninLink() {
-    cy.get("a[ui-sref=app.login]").first().click();
+  clickOnSigninLink() {
+    cy.get("a[ui-sref='app.login']").eq(1).click();
   }
 
-  clickingOnSignupLink() {
-    cy.get("a[ui-sref='app.register']").first().click();
+  clickOnSignupLink() {
+    cy.get("a[ui-sref='app.register']").eq(1).click();
   }
 }
 

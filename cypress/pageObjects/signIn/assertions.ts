@@ -1,13 +1,13 @@
 class SignInPageAssertions {
-  checkLogedin(content: string) {
-    cy.get("ul[show-authed=true]", { timeout: 6000 })
-      .children()
-      .should("contain", content);
+  checkIsLoggedin(content: string) {
+    cy.get("ul[show-authed=true]").children().should("contain", content);
     return this;
   }
 
-  checkLoginURL() {
-    cy.url().should("contain", "#/login");
+  checkErrorContent(content: string, isContains = true) {
+    cy.get("div.ng-scope ")
+      .children()
+      .should(isContains ? "contain" : "not.contain", content);
     return this;
   }
 }

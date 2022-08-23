@@ -4,25 +4,25 @@ class NewArticlePageActions {
     return this;
   }
 
-  addTitle(title?: string) {
+  typeInTitleInput(title?: string) {
     const clearTitleInput = cy.get("input[type=text]").eq(0).clear();
     title ? clearTitleInput.type(title) : clearTitleInput;
     return this;
   }
 
-  addAbout(about?: string) {
+  typeInAboutInput(about?: string) {
     const clearBoutInput = cy.get("input[type=text]").eq(1).clear();
     about ? clearBoutInput.type(about) : clearBoutInput;
     return this;
   }
 
-  addArticle(article?: string) {
+  typeInArticleInput(article?: string) {
     const clearArticleContentInput = cy.get("textarea").clear();
     article ? clearArticleContentInput.type(article) : clearArticleContentInput;
     return this;
   }
 
-  addTags(tags: string[]) {
+  typeInTagsInput(tags: string[]) {
     tags.forEach((tag) => cy.get("input[type=text]").eq(2).type(tag));
     return this;
   }
@@ -37,7 +37,7 @@ class NewArticlePageActions {
     return this;
   }
 
-  clickOnPublishAeticle() {
+  clickOnPublishAeticleButton() {
     cy.get("button").click();
     return this;
   }

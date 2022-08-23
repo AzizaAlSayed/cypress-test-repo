@@ -2,15 +2,15 @@ import ArticlePageActions from "@pageObjects/article/actions";
 import SharedDataUtils from "@pageObjects/dataUtils";
 import ProfilePageActions from "@pageObjects/profile/actions";
 import ProfilePageAssertion from "@pageObjects/profile/assertions";
-import SignUpPageAssertions from "@pageObjects/signup/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
+const sharedAssertions = new SharedAssertions();
 const profilePageActions = new ProfilePageActions();
 const profilePageAssertion = new ProfilePageAssertion();
 const articlePageActions = new ArticlePageActions();
-const signUpPageAssertions = new SignUpPageAssertions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -77,7 +77,7 @@ Given("The user opened their profile page", () => {
 });
 
 When("The user clicks on favorite button", () => {
-  profilePageActions.clickOnFavorite();
+  profilePageActions.clickOnFavoriteButton();
 });
 
 Then(
@@ -95,10 +95,25 @@ Then(
   }
 );
 
+Then(
+  "The article counter favorite should be equal to (1) in the Articles tab",
+  () => {
+    profilePageAssertion.checkArticleNumberFavoritesInArticlesTab("(1)");
+  }
+);
+
+Then(
+  "The article counter favorite should be equal to (1) in the Favorited tab",
+  () => {
+    profilePageActions.openFavoritedTab();
+    profilePageAssertion.checkArticleNumberFavoritesInFavoritedTab("(1)");
+  }
+);
+
 Then("The Sign up page should be appear", () => {
-  signUpPageAssertions.checkSignupURL();
+  sharedAssertions.checkUrlContainsValue("#/register", true);
 });
 
-/*afterEach(() => {
+afterEach(() => {
   sharedDataUtils.deleteArticleByTitle(article.title);
-});*/
+});

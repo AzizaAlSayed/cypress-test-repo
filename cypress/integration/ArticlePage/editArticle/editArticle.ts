@@ -1,16 +1,16 @@
 import ArticlePageActions from "@pageObjects/article/actions";
-import ArticlePageAssertions from "@pageObjects/article/assertions";
 import SharedDataUtils from "@pageObjects/dataUtils";
 import NewArticlePageActions from "@pageObjects/newArticle/actions";
 import NewArticlePageAssertions from "@pageObjects/newArticle/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
+const sharedAssertions = new SharedAssertions();
 const articlePageActions = new ArticlePageActions();
 const newArticlePageAssertions = new NewArticlePageAssertions();
 const newArticlePageActions = new NewArticlePageActions();
-const articlePageAssertions = new ArticlePageAssertions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -48,7 +48,7 @@ beforeEach(() => {
   });
 });
 
-Given("A user login to the system", () => {
+Given("A user logged in to the system", () => {
   cy.login(user.email, user.password);
 });
 
@@ -60,10 +60,11 @@ Given("The system has an article created by that user", () => {
 
 Given("The user was on the Article page", () => {
   articlePageActions.openArticlePage(articleSlug);
+  cy.wait(["@user"]);
 });
 
 When("The user clicks on the Edit Article button", () => {
-  articlePageActions.clickOnEditArticle();
+  articlePageActions.clickOnEditArticleLink();
 });
 
 Then("The Edit page for this article should be appear", () => {
@@ -74,23 +75,22 @@ Given("The user was on the Edit Article page", () => {
   articlePageActions.openEditorArticlePage(articleSlug);
 });
 
-Given("The user was on the Edit Article page", () => {
-  articlePageActions.openEditorArticlePage(article.title);
-});
-
 When("The user adds a new valid title", () => {
-  newArticlePageActions.addTitle(newArticle.title);
+  newArticlePageActions.typeInTitleInput(newArticle.title);
 });
 
 When("The user clicks on the Publish Post button", () => {
   cy.intercept("PUT", "/api/articles").as("articles");
-  newArticlePageActions.clickOnPublishAeticle();
+  newArticlePageActions.clickOnPublishAeticleButton();
   cy.wait("@articles");
 });
 
 Then("The Article page should be appear", () => {
   sharedDataUtils.getActicleByTitle(newArticle.title).then((articleResult) => {
-    articlePageAssertions.checkArticlePageExistence(articleResult.slug);
+    sharedAssertions.checkUrlContainsValue(
+      `#/article/${articleResult.slug}`,
+      true
+    );
   });
 });
 
@@ -103,7 +103,7 @@ Then("The system has already another article created by that user", () => {
 });
 
 Then("The user adds a title that already exists title", () => {
-  newArticlePageActions.addTitle(newArticle.title);
+  newArticlePageActions.typeInTitleInput(newArticleForinvalidTitle.title);
 });
 
 Then("An alert should be appear {string}", (alertContent: string) => {
@@ -111,7 +111,7 @@ Then("An alert should be appear {string}", (alertContent: string) => {
 });
 
 When("The user remove title", () => {
-  newArticlePageActions.addTitle();
+  newArticlePageActions.typeInTitleInput();
 });
 
 Then("The alert should be appear {string}", (alertContent: string) => {
@@ -119,15 +119,15 @@ Then("The alert should be appear {string}", (alertContent: string) => {
 });
 
 When("The user fills a new about", () => {
-  newArticlePageActions.addAbout(newArticle.description);
+  newArticlePageActions.typeInAboutInput(newArticle.description);
 });
 
 Then("The Article page, should be appear", () => {
-  articlePageAssertions.checkArticlePageExistence(articleSlug);
+  sharedAssertions.checkUrlContainsValue(`#/article/${articleSlug}`, true);
 });
 
 When("The user remove about", () => {
-  newArticlePageActions.addAbout();
+  newArticlePageActions.typeInAboutInput();
 });
 
 Then("The alert for about input should be appear {string}", (about: string) => {
@@ -135,15 +135,15 @@ Then("The alert for about input should be appear {string}", (about: string) => {
 });
 
 When("The user fills a new article body", () => {
-  newArticlePageActions.addArticle(newArticle.body);
+  newArticlePageActions.typeInArticleInput(newArticle.body);
 });
 
 Then("The article body should be shown on the Article page", () => {
-  newArticlePageAssertions.checkingArticleContent(newArticle.body);
+  newArticlePageAssertions.checkArticleContent(newArticle.body);
 });
 
 When("The user remove article body", () => {
-  newArticlePageActions.addArticle();
+  newArticlePageActions.typeInArticleInput();
 });
 
 Then("An alert for body input should be appear {string}", (body: string) => {
@@ -151,13 +151,13 @@ Then("An alert for body input should be appear {string}", (body: string) => {
 });
 
 When("The user fills a new tag", () => {
-  newArticlePageActions.addTags(
+  newArticlePageActions.typeInTagsInput(
     newArticle.tagList.map((tag) => `${tag}{enter}`)
   );
 });
 
 Then("The tag should be shown on the Article page", () => {
-  newArticlePageAssertions.checkTagsContent(newArticle.tagList);
+  newArticlePageAssertions.checkTagsInputContainsValue(newArticle.tagList);
 });
 
 When("The user remove all tag", () => {
@@ -165,7 +165,7 @@ When("The user remove all tag", () => {
 });
 
 Then("The tags should not be shown on the Article page", () => {
-  newArticlePageAssertions.checkTagsContent(article.tagList, false);
+  newArticlePageAssertions.checkTagsInputContainsValue(article.tagList, false);
 });
 
 When("The user remove a tag", () => {
@@ -173,37 +173,40 @@ When("The user remove a tag", () => {
 });
 
 Then("The tag should not be shown on the Article page", () => {
-  newArticlePageAssertions.checkTagsContent([article.tagList[0]], false);
+  newArticlePageAssertions.checkTagsInputContainsValue(
+    [article.tagList[0]],
+    false
+  );
 });
 
 When("The user fills in a new about", () => {
-  newArticlePageActions.addAbout(newArticle.description);
+  newArticlePageActions.typeInAboutInput(newArticle.description);
 });
 
 Then("The about only should be changed on the Edit page", () => {
   articlePageActions.openEditorArticlePage(articleSlug);
   newArticlePageAssertions
-    .checkEditedTitleContainsValue(article.title)
-    .checkEditedAboutContainsValue(newArticle.description)
-    .checkEditedArticleContainsValue(article.body)
-    .checkTagsContent(article.tagList);
+    .checkTitleInputContainsValue(article.title)
+    .checkAboutInputContainsValue(newArticle.description)
+    .checkArticleInputContainsValue(article.body)
+    .checkTagsInputContainsValue(article.tagList);
 });
 
 When("The user fills in a new article body", () => {
-  newArticlePageActions.addArticle(newArticle.body);
+  newArticlePageActions.typeInArticleInput(newArticle.body);
 });
 
 Then("The article body only should be changed on the Edit page", () => {
   articlePageActions.openEditorArticlePage(articleSlug);
   newArticlePageAssertions
-    .checkEditedTitleContainsValue(article.title)
-    .checkEditedAboutContainsValue(article.description)
-    .checkEditedArticleContainsValue(newArticle.body)
-    .checkTagsContent(article.tagList);
+    .checkTitleInputContainsValue(article.title)
+    .checkAboutInputContainsValue(article.description)
+    .checkArticleInputContainsValue(newArticle.body)
+    .checkTagsInputContainsValue(article.tagList);
 });
 
 When("The user fills in new tags", () => {
-  newArticlePageActions.addTags(
+  newArticlePageActions.typeInTagsInput(
     newArticle.tagList.map((tag) => `${tag}{enter}`)
   );
 });
@@ -211,11 +214,11 @@ When("The user fills in new tags", () => {
 Then("The tags only should be changed on the Edit page", () => {
   articlePageActions.openEditorArticlePage(articleSlug);
   newArticlePageAssertions
-    .checkEditedTitleContainsValue(article.title)
-    .checkEditedAboutContainsValue(article.description)
-    .checkEditedArticleContainsValue(article.body)
-    .checkTagsContent(article.tagList)
-    .checkTagsContent(newArticle.tagList);
+    .checkTitleInputContainsValue(article.title)
+    .checkAboutInputContainsValue(article.description)
+    .checkArticleInputContainsValue(article.body)
+    .checkTagsInputContainsValue(article.tagList)
+    .checkTagsInputContainsValue(newArticle.tagList);
 });
 
 Then("The title only should be changed on the Edit page", () => {
@@ -223,10 +226,10 @@ Then("The title only should be changed on the Edit page", () => {
     articlePageActions.openEditorArticlePage(articleResult.slug);
   });
   newArticlePageAssertions
-    .checkEditedArticleContainsValue(article.body)
-    .checkEditedAboutContainsValue(article.description)
-    .checkEditedTitleContainsValue(newArticle.title)
-    .checkTagsContent(article.tagList);
+    .checkArticleInputContainsValue(article.body)
+    .checkAboutInputContainsValue(article.description)
+    .checkTitleInputContainsValue(newArticle.title)
+    .checkTagsInputContainsValue(article.tagList);
 });
 
 afterEach(() => {

@@ -11,11 +11,6 @@ class ArticlePageAssertions {
     cy.get("comment").should(isExiste ? "exist" : "not.exist");
     return this;
   }
-
-  checkArticlePageExistence(slug: string) {
-    cy.url().should("contains", `#/article/${slug}`);
-    return this;
-  }
 }
 
 export default ArticlePageAssertions;

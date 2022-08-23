@@ -58,11 +58,12 @@ class SharedDataUtils {
   ): Cypress.Chainable<ArticleResponseBody> => {
     return this.getAllActiclesByAuthor(
       JSON.parse(localStorage.getItem("userInfo")).username
-    ).then(
-      (allArticles) =>
+    ).then((allArticles) => {
+      return (
         allArticles.articles.filter((article) => article.title === title)[0] ||
         null
-    );
+      );
+    });
   };
 
   deleteArticleByTitle = (articleTitle: string) => {

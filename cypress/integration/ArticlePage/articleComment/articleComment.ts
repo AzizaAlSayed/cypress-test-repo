@@ -1,16 +1,14 @@
 import ArticlePageActions from "@pageObjects/article/actions";
 import ArticlePageAssertions from "@pageObjects/article/assertions";
 import SharedDataUtils from "@pageObjects/dataUtils";
-import SignInPageAssertions from "@pageObjects/signIn/assertions";
-import SignUpPageAssertions from "@pageObjects/signup/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { Comment, NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const articlePageActions = new ArticlePageActions();
 const articleAssertions = new ArticlePageAssertions();
 const sharedDataUtils = new SharedDataUtils();
-const signUpPageAssertions = new SignUpPageAssertions();
-const signInPageAssertions = new SignInPageAssertions();
+const sharedAssertions = new SharedAssertions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -64,6 +62,7 @@ Given("The system has an article created by a user", () => {
 
 Given("The user was at Article page", () => {
   articlePageActions.openArticlePage(articleSlug);
+  cy.wait("@user");
 });
 
 Given("Another user was on that Article page", () => {
@@ -78,39 +77,7 @@ Given("The system has an article created by that user", () => {
 
 Given("The user was at that Article page", () => {
   articlePageActions.openArticlePage(articleSlug);
-});
-
-When("The user clicks on sign up", () => {
-  articlePageActions.clickingOnSignupLink();
-});
-
-When("The user clicks on sign in", () => {
-  articlePageActions.clickingOnSigninLink();
-});
-
-When("The user writes a comment", () => {
-  articlePageActions.typeComment(articleComment.body);
-});
-
-When("The user added a comment on the article page", () => {
-  articlePageActions.typeComment(articleComment.body);
-  articlePageActions.clickOnPostComment();
-});
-
-When("The user clicks on the Post Comment button", () => {
-  articlePageActions.clickOnPostComment();
-});
-
-Then("The comment should be shown on the Article page", () => {
-  articleAssertions.checkCommentContent(articleComment.body);
-});
-
-Then("The Sign up page should be appear", () => {
-  signUpPageAssertions.checkSignupURL();
-});
-
-Then("The Sign in page should be appear", () => {
-  signInPageAssertions.checkLoginURL();
+  cy.wait("@user");
 });
 
 Given("The user posted a comment", () => {
@@ -118,7 +85,40 @@ Given("The user posted a comment", () => {
 });
 
 When("The user clicks on the rubbish button on the post", () => {
-  articlePageActions.clickOnDeleteComment();
+  articlePageActions.clickOnDeleteCommentButton();
+});
+
+When("The user clicks on sign up", () => {
+  articlePageActions.clickOnSignupLink();
+});
+
+When("The user clicks on sign in", () => {
+  articlePageActions.clickOnSigninLink();
+});
+
+When("The user writes a comment", () => {
+  articlePageActions.typeInCommentInput(articleComment.body);
+});
+
+When("The user added a comment on the article page", () => {
+  articlePageActions.typeInCommentInput(articleComment.body);
+  articlePageActions.clickOnPostCommentButton();
+});
+
+When("The user clicks on the Post Comment button", () => {
+  articlePageActions.clickOnPostCommentButton();
+});
+
+Then("The comment should be shown on the Article page", () => {
+  articleAssertions.checkCommentContent(articleComment.body);
+});
+
+Then("The Sign up page should be appear", () => {
+  sharedAssertions.checkUrlContainsValue("#/register", true);
+});
+
+Then("The Sign in page should be appear", () => {
+  sharedAssertions.checkUrlContainsValue("#/login", true);
 });
 
 Then("The comment should be deleted", () => {

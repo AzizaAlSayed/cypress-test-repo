@@ -44,10 +44,11 @@ Given("The system has an article created by that user", () => {
 
 Given("The user was at Article page", () => {
   articlePageActions.openArticlePage(articleSlug);
+  cy.wait(["@user", "@articles"]);
 });
 
 When("The user clicks on the Delete Article button", () => {
-  articlePageActions.clickOnDeleteArticle();
+  articlePageActions.clickOnDeleteArticleButton();
 });
 
 Then("The post should be deleted", () => {
