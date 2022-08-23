@@ -46,6 +46,7 @@ Given("The system has a favorited article", () => {
 
 Given("The user opened the Favorited tab from their profile page", () => {
   profileActions.openProfile(user.username).openFavoritedTab();
+  cy.wait("@user");
 });
 
 When("The user clicks on unfavorite button", () => {
@@ -63,6 +64,7 @@ Then(
   "The article counter favorite should be equal to zero in the Articles tab",
   () => {
     profileActions.openProfile(user.username);
+    cy.wait("@user");
     profileAssertion.checkArticleNumberFavoritesInArticlesTab("0");
   }
 );

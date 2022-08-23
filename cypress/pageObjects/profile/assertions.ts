@@ -16,7 +16,7 @@ class ProfilePageAssertions {
   }
 
   checkUsernameContent(username: string, isContain = true) {
-    cy.get("h4").contains(username);
+    cy.get("h4").should(isContain ? "contain" : "not.contain", username);
     return this;
   }
 

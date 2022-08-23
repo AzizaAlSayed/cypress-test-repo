@@ -2,7 +2,6 @@ class ProfilePageActions {
   openProfile(username: string) {
     cy.intercept("GET", "/api/user").as("user");
     cy.visit(`#/@${username}`);
-    cy.wait("@user");
     return this;
   }
 
@@ -13,6 +12,11 @@ class ProfilePageActions {
 
   clickOnFavorite() {
     cy.get("favorite-btn").eq(0).click();
+    return this;
+  }
+
+  clickOnEditProfileSettings() {
+    cy.get("a.btn").click();
     return this;
   }
 }

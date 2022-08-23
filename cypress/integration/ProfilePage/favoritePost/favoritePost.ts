@@ -34,12 +34,13 @@ Given("A user logged in with an existing account", () => {
   });
 });
 
-Given("The user made an article created", () => {
+Given("The user created an article", () => {
   sharedDataUtils.createArticle(article);
 });
 
 Given("The user opened their profile page", () => {
   profilePageActions.openProfile(user.username);
+  cy.wait("@user");
 });
 
 When("The user clicks on favorite button", () => {
