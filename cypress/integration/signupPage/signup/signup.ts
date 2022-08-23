@@ -15,8 +15,8 @@ const validUser: NewUser = {
 };
 
 const exsitingUser: NewUser = {
-  username: "larissa77j",
-  email: "larissa77j@gamil.com",
+  username: "conduituser",
+  email: "conduituser@test.com",
   password: "123456",
 };
 
