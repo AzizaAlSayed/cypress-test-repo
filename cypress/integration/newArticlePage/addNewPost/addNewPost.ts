@@ -1,12 +1,14 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
 import NewArticlePageActions from "@pageObjects/newArticle/actions";
 import NewArticlePageAssertions from "@pageObjects/newArticle/assertions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewArticle } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const newArticlePageActions = new NewArticlePageActions();
 const newArticlePageAssertions = new NewArticlePageAssertions();
 const sharedDataUtils = new SharedDataUtils();
+const sharedAssertions = new SharedAssertions();
 
 const article: NewArticle = {
   title: "Cypress Conduit Article Title",
@@ -46,9 +48,10 @@ When("The user clicks on Publish Article button", () => {
 });
 
 Then("The article name should be shown in the URL", () => {
+  sharedAssertions.checkUrlContainsValue("article", true);
   newArticlePageAssertions
-    .checkTheArticlePageExistence()
-    .checkTitleContent(article.title)
+    .checkingTheArticlePage()
+    .checkingTitle(article.title)
     .checkArticleContent(article.body)
     .checkTagsContent(article.tagList)
     .checkDeleteArticle();
