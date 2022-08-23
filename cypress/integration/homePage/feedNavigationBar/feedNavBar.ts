@@ -31,8 +31,8 @@ beforeEach(() => {
 Given("The system has an article created by that user", () => {
   sharedDataUtils
     .getPopularTags()
-    .then((tags) => article.tagList.push(tags[0]));
-  sharedDataUtils.createArticle(article);
+    .then((tags) => article.tagList.push(tags[0]))
+    .then(() => sharedDataUtils.createArticle(article));
 });
 
 Given("A user logged in with an exisiting account", () => {
