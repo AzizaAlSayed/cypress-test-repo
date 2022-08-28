@@ -57,3 +57,6 @@ export interface CommentResponseBody {
   body: string;
   author: Author;
 }
+export interface Tags {
+  tags: string[];
+}

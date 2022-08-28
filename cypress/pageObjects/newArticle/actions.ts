@@ -1,9 +1,4 @@
 class NewArticlePageActions {
-  openNewArticlePage() {
-    cy.visit("#/editor/");
-    return this;
-  }
-
   typeInTitleInput(title?: string) {
     const clearTitleInput = cy.get("input[type=text]").eq(0).clear();
     title ? clearTitleInput.type(title) : clearTitleInput;
@@ -39,7 +34,6 @@ class NewArticlePageActions {
 
   clickOnPublishAeticleButton() {
     cy.get("button").click();
-    return this;
   }
 }
 
