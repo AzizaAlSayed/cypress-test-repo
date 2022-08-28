@@ -1,4 +1,5 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
+import HomePageActions from "@pageObjects/home/actions";
 import ProfileActions from "@pageObjects/profile/actions";
 import ProfilePageAssertion from "@pageObjects/profile/assertions";
 import { NewArticle, NewUser } from "@support/types";
@@ -6,6 +7,7 @@ import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
 const profileActions = new ProfileActions();
+const homePageActions = new HomePageActions();
 const profileAssertion = new ProfilePageAssertion();
 
 const user: NewUser = {
@@ -45,7 +47,8 @@ Given("The system has a favorited article", () => {
 });
 
 Given("The user opened the Favorited tab from their profile page", () => {
-  profileActions.openProfile(user.username).openFavoritedTab();
+  homePageActions.openProfilePage(user.username);
+  profileActions.openFavoritedTab();
 });
 
 When("The user clicks on unfavorite button", () => {
@@ -62,7 +65,7 @@ Then(
 Then(
   "The article counter favorite should be equal to zero in the Articles tab",
   () => {
-    profileActions.openProfile(user.username);
+    homePageActions.openProfilePage(user.username);
     profileAssertion.checkArticleNumberFavoritesInArticlesTab("0");
   }
 );

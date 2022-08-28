@@ -1,13 +1,13 @@
 import ArticlePageActions from "@pageObjects/article/actions";
 import SharedDataUtils from "@pageObjects/dataUtils";
-import ProfilePageActions from "@pageObjects/profile/actions";
+import HomePageActions from "@pageObjects/home/actions";
 import ProfilePageAssertions from "@pageObjects/profile/assertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const articlePageActions = new ArticlePageActions();
 const profilePageAssertions = new ProfilePageAssertions();
-const profilePageActions = new ProfilePageActions();
+const homePageActions = new HomePageActions();
 const sharedDataUtils = new SharedDataUtils();
 
 const user: NewUser = {
@@ -44,7 +44,7 @@ Given("The system has an article created by that user", () => {
 
 Given("The user was at Article page", () => {
   articlePageActions.openArticlePage(articleSlug);
-  cy.wait(["@user", "@articles"]);
+  cy.wait(["@user"]);
 });
 
 When("The user clicks on the Delete Article button", () => {
@@ -52,7 +52,7 @@ When("The user clicks on the Delete Article button", () => {
 });
 
 Then("The post should be deleted", () => {
-  profilePageActions.openProfile(user.username);
+  homePageActions.openProfilePage(user.username);
   profilePageAssertions.checkExistingPost(article.title);
 });
 

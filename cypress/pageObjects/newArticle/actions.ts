@@ -39,7 +39,6 @@ class NewArticlePageActions {
 
   clickOnPublishAeticleButton() {
     cy.get("button").click();
-    return this;
   }
 }
 

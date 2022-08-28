@@ -1,5 +1,6 @@
 import ArticlePageActions from "@pageObjects/article/actions";
 import SharedDataUtils from "@pageObjects/dataUtils";
+import HomePageActions from "@pageObjects/home/actions";
 import ProfilePageActions from "@pageObjects/profile/actions";
 import ProfilePageAssertion from "@pageObjects/profile/assertions";
 import SharedAssertions from "@pageObjects/sharedAssertions";
@@ -7,10 +8,11 @@ import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
-const sharedAssertions = new SharedAssertions();
 const profilePageActions = new ProfilePageActions();
 const profilePageAssertion = new ProfilePageAssertion();
 const articlePageActions = new ArticlePageActions();
+const sharedAssertions = new SharedAssertions();
+const homePageActions = new HomePageActions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -73,7 +75,7 @@ Given("The user made an article created", () => {
 });
 
 Given("The user opened their profile page", () => {
-  profilePageActions.openProfile(user.username);
+  homePageActions.openProfilePage(user.username);
 });
 
 When("The user clicks on favorite button", () => {

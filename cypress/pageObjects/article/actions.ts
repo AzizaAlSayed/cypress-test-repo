@@ -3,8 +3,7 @@ class ArticlePageActions {
     cy.intercept("GET", "/api/user").as("user");
     cy.intercept("GET", "/api/articles/**").as("articles");
     cy.visit(`#/article/${articleSlug}`);
-    cy.wait(["@articles"]);
-
+    cy.wait("@articles");
     return this;
   }
 

@@ -1,12 +1,14 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
+import HomePageActions from "@pageObjects/home/actions";
 import NewArticlePageActions from "@pageObjects/newArticle/actions";
 import NewArticlePageAssertions from "@pageObjects/newArticle/assertions";
 import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewArticle } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
-const newArticlePageActions = new NewArticlePageActions();
 const newArticlePageAssertions = new NewArticlePageAssertions();
+const newArticlePageActions = new NewArticlePageActions();
+const homePageActions = new HomePageActions();
 const sharedDataUtils = new SharedDataUtils();
 const sharedAssertions = new SharedAssertions();
 
@@ -24,7 +26,7 @@ beforeEach(() => {
 });
 
 Given("The user opened the New Article page", () => {
-  newArticlePageActions.openNewArticlePage();
+  homePageActions.openNewArticlePage();
 });
 
 When("The user fills a title", () => {
