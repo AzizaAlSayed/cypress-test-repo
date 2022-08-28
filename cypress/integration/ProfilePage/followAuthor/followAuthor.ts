@@ -2,17 +2,17 @@ import ArticlePageActions from "@pageObjects/article/actions";
 import AuthorProfilePageActions from "@pageObjects/authorProfile/actions";
 import AuthorProfilePageAssertions from "@pageObjects/authorProfile/assertions";
 import SharedDataUtils from "@pageObjects/dataUtils";
-import ProfilePageActions from "@pageObjects/profile/actions";
-import SignUpPageAssertions from "@pageObjects/signup/assertions";
+import HomePageActions from "@pageObjects/home/actions";
+import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewArticle, NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const articlePageActions = new ArticlePageActions();
 const sharedDataUtils = new SharedDataUtils();
-const signUpPageAssertions = new SignUpPageAssertions();
 const authorProfilePageAssertions = new AuthorProfilePageAssertions();
 const authorProfilePageActions = new AuthorProfilePageActions();
-const profilePageActions = new ProfilePageActions();
+const homePageActions = new HomePageActions();
+const sharedAssertions = new SharedAssertions();
 
 const authorPost: NewUser = {
   username: "ConduitAuthorPost",
@@ -69,12 +69,11 @@ Given("A user logged in with an exisiting account", () => {
 });
 
 Given("The user was on the author profile", () => {
-  profilePageActions.openProfile(authorPost.username);
-  cy.wait("@user");
+  homePageActions.openAuthourProfilePage(authorPost.username);
 });
 
 Given("A user was on the author profile", () => {
-  profilePageActions.openProfile(authorPost.username);
+  homePageActions.openAuthourProfilePage(authorPost.username);
 });
 
 When("The user clicks on follow author button", () => {
@@ -86,7 +85,7 @@ When("The user clicks on follow button", () => {
 });
 
 Then("The Sign up page should be appear", () => {
-  signUpPageAssertions.checkSignupURL();
+  sharedAssertions.checkUrlContainsValue("#/register", true);
 });
 
 Then(
@@ -101,5 +100,5 @@ Then("The Follow author button should be toggled to Unfollow button", () => {
 });
 
 Then("The Sign up page should be appear", () => {
-  signUpPageAssertions.checkSignupURL();
+  sharedAssertions.checkUrlContainsValue("#/register", true);
 });

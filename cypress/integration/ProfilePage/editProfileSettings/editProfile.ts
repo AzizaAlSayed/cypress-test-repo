@@ -1,14 +1,14 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
+import HomePageActions from "@pageObjects/home/actions";
 import ProfilePageActions from "@pageObjects/profile/actions";
-import SettingsPageAssertions from "@pageObjects/settings/assertions";
 import SharedAssertions from "@pageObjects/sharedAssertions";
 import { NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 
 const sharedDataUtils = new SharedDataUtils();
 const profilePageActions = new ProfilePageActions();
-const settingsPageAssertions = new SettingsPageAssertions();
 const sharedAssertions = new SharedAssertions();
+const homePageActions = new HomePageActions();
 
 const user: NewUser = {
   username: "Conduit User",
@@ -28,7 +28,7 @@ Given("A user logged in with an existing account", () => {
 });
 
 Given("The user was on the profile page", () => {
-  profilePageActions.openProfile(user.username);
+  homePageActions.openProfilePage(user.username);
   cy.wait("@user");
 });
 

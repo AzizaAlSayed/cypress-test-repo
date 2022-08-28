@@ -1,9 +1,10 @@
 import SharedDataUtils from "@pageObjects/dataUtils";
+import HomePageActions from "@pageObjects/home/actions";
 import ProfileAssertion from "@pageObjects/profile/assertions";
 import SettingsPageActions from "@pageObjects/settings/actions";
 import SettingsPageAssertions from "@pageObjects/settings/assertions";
 import SharedAssertions from "@pageObjects/sharedAssertions";
-import { NewUser, NewUserResponseBody } from "@support/types";
+import { NewUser } from "@support/types";
 import { Given, Then, When } from "cypress-cucumber-preprocessor/steps";
 import moment from "moment";
 
@@ -12,6 +13,7 @@ const settingsPageAssertions = new SettingsPageAssertions();
 const profileAssertion = new ProfileAssertion();
 const sharedDataUtils = new SharedDataUtils();
 const sharedAssertions = new SharedAssertions();
+const homePageActions = new HomePageActions();
 
 const user: NewUser = {
   username: "ConduitUser",
@@ -39,7 +41,7 @@ Given("A user logged in with an existing account", () => {
 });
 
 Given("The user clicked on the Settings tab", () => {
-  settingsPageActions.openSettingsPage();
+  homePageActions.openSettingsPage();
 });
 
 When("The user fills in a new valid profile picture", () => {
@@ -87,7 +89,7 @@ When("The user fills in a new password", () => {
 });
 
 Then("The profile picture only should be changed on the Settings page", () => {
-  settingsPageActions.openSettingsPage();
+  sharedAssertions.checkUrlContainsValue("#/settings", true);
   settingsPageAssertions
     .checkBioInputContainsValue("")
     .checkEmailInputContainsValue(user.email)
@@ -96,7 +98,7 @@ Then("The profile picture only should be changed on the Settings page", () => {
 });
 
 Then("The bio only should be changed on the Settings page", () => {
-  settingsPageActions.openSettingsPage();
+  sharedAssertions.checkUrlContainsValue("#/settings", true);
   settingsPageAssertions
     .checkBioInputContainsValue(newUser.bio)
     .checkEmailInputContainsValue(user.email)
@@ -105,7 +107,7 @@ Then("The bio only should be changed on the Settings page", () => {
 });
 
 Then("The username only should be changed on the Settings page", () => {
-  settingsPageActions.openSettingsPage();
+  sharedAssertions.checkUrlContainsValue("#/settings", true);
   settingsPageAssertions
     .checkUsernameInputContainsValue(newUser.username)
     .checkImgInputContainsValue("")
@@ -114,7 +116,7 @@ Then("The username only should be changed on the Settings page", () => {
 });
 
 Then("The email only should be changed on the Settings page", () => {
-  settingsPageActions.openSettingsPage();
+  sharedAssertions.checkUrlContainsValue("#/settings", true);
   settingsPageAssertions
     .checkEmailInputContainsValue(newUser.email)
     .checkImgInputContainsValue("")
