@@ -13,10 +13,15 @@ Cypress.Commands.add("login", (email?: string, password?: string) => {
   });
 });
 
+Cypress.Commands.add("logout", () => {
+  cy.clearLocalStorage();
+});
+
 declare global {
   namespace Cypress {
     interface Chainable {
       login: (email?: string, password?: string) => Cypress.Chainable;
+      logout: () => Cypress.Chainable;
     }
   }
 }

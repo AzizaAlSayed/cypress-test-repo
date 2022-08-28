@@ -1,9 +1,4 @@
 class SignInPageActions {
-  openLoginPage() {
-    cy.visit("#/login");
-    return this;
-  }
-
   typeInEmailInput(email: string) {
     cy.get("input[type=email]").type(email);
     return this;
