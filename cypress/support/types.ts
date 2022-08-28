@@ -21,6 +21,13 @@ export interface NewArticle {
   title: string;
 }
 
+export interface Author {
+  username: string;
+  bio: string;
+  image: string;
+  following: boolean;
+}
+
 export interface ArticleResponseBody {
   slug: string;
   title: string;
@@ -31,12 +38,7 @@ export interface ArticleResponseBody {
   updatedAt: string;
   favorited: boolean;
   favoritesCount: number;
-  author: {
-    username: string;
-    bio: string;
-    image: string;
-    following: boolean;
-  };
+  author: Author;
 }
 
 export interface AllArticlesByAuthorResponse {
@@ -44,6 +46,17 @@ export interface AllArticlesByAuthorResponse {
   articlesCount: number;
 }
 
+export interface Comment {
+  body: string;
+}
+
+export interface CommentResponseBody {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  body: string;
+  author: Author;
+}
 export interface Tags {
   tags: string[];
 }
