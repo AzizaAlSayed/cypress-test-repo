@@ -1,9 +1,4 @@
 class SignUpPageActions {
-  openSignUpPage() {
-    cy.visit("#/register");
-    return this;
-  }
-
   clickOnHaveAnAccountLink() {
     cy.get("p").contains("Have an account?").click();
     return this;

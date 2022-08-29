@@ -41,11 +41,11 @@ Given("The user opened the Sign in page", () => {
 
 When("The user tries to login with a valid email and password", () => {
   signInActions.typeInEmailInput(user.email);
-  signInActions.typeInpasswordInput(user.password);
+  signInActions.typeInPasswordInput(user.password);
 });
 
 When("The user clicks on Sign in button", () => {
-  signInActions.clickSignInButton();
+  signInActions.clickOnSignInButton();
 });
 
 Then("The {string} page should be shown", (content: string) => {
@@ -54,7 +54,7 @@ Then("The {string} page should be shown", (content: string) => {
 
 When("The user tries to login with an invalid email and password", () => {
   signInActions.typeInEmailInput(invalidUser.email);
-  signInActions.typeInpasswordInput(invalidUser.password);
+  signInActions.typeInPasswordInput(invalidUser.password);
 });
 
 Then(
@@ -66,7 +66,7 @@ Then(
 
 When("The user tries to login with a valid email and invalid password", () => {
   signInActions.typeInEmailInput(user.email);
-  signInActions.typeInpasswordInput(invalidUser.password);
+  signInActions.typeInPasswordInput(invalidUser.password);
 });
 
 When(
@@ -88,7 +88,7 @@ Then(
 When(
   "The user tries to login with empty email field and fills any password",
   () => {
-    signInActions.typeInpasswordInput(user.password);
+    signInActions.typeInPasswordInput(user.password);
   }
 );
 

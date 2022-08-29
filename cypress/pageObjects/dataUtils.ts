@@ -1,7 +1,13 @@
-import { createArticleBody, createUserBody } from "@support/constants";
+import {
+  createArticleBody,
+  createCommentBody,
+  createUserBody,
+} from "@support/constants";
 import {
   AllArticlesByAuthorResponse,
   ArticleResponseBody,
+  Comment,
+  CommentResponseBody,
   NewArticle,
   NewUser,
   NewUserResponseBody,
@@ -53,11 +59,12 @@ class SharedDataUtils {
   ): Cypress.Chainable<ArticleResponseBody> => {
     return this.getAllActiclesByAuthor(
       JSON.parse(localStorage.getItem("userInfo")).username
-    ).then(
-      (allArticles) =>
+    ).then((allArticles) => {
+      return (
         allArticles.articles.filter((article) => article.title === title)[0] ||
         null
-    );
+      );
+    });
   };
 
   deleteArticleByTitle = (articleTitle: string) => {
@@ -86,19 +93,20 @@ class SharedDataUtils {
       .then((articleResult) => articleResult.body);
   };
 
-  updateUser = (
-    user: NewUserResponseBody
-  ): Cypress.Chainable<ArticleResponseBody> => {
+  addComment = (
+    slug: string,
+    comment: Comment
+  ): Cypress.Chainable<CommentResponseBody> => {
     return cy
       .request({
-        method: "PUT",
-        url: "https://api.realworld.io/api/user",
-        body: user,
+        method: "POST",
+        url: `https://api.realworld.io/api/articles/${slug}/comments`,
+        body: createCommentBody(comment),
         headers: {
           authorization: `Token ${localStorage.getItem("jwtToken")}`,
         },
       })
-      .then((userResult) => userResult.body.user);
+      .then((commentResult) => commentResult.body.comment);
   };
 
   getPopularTags = (): Cypress.Chainable<Tags> => {
@@ -107,5 +115,4 @@ class SharedDataUtils {
       .then((popularTags) => popularTags.body.tags);
   };
 }
-
 export default SharedDataUtils;

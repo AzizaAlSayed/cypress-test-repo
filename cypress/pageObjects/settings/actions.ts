@@ -1,9 +1,4 @@
 class SettingsPageActions {
-  openSettingsPage() {
-    cy.visit("#/settings");
-    return this;
-  }
-
   typeInImageInput(img: string) {
     cy.get("input").eq(0).clear().type(img);
     return this;

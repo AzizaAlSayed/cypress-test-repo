@@ -4,12 +4,12 @@ class SignInPageActions {
     return this;
   }
 
-  typeInpasswordInput(password: string) {
+  typeInPasswordInput(password: string) {
     cy.get("input[type=password]").type(password);
     return this;
   }
 
-  clickSignInButton() {
+  clickOnSignInButton() {
     cy.contains(".btn", "Sign in").click();
     return this;
   }

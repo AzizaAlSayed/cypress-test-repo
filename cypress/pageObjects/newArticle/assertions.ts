@@ -1,15 +1,10 @@
 class NewArticlePageAssertions {
-  checkingTheArticlePage() {
-    cy.url().should("contains", "article");
+  checkTitleContent(title: string, isContain = true) {
+    cy.get("h1").should(isContain ? "contain" : "not.contain", title);
     return this;
   }
 
-  checkingTitle(title: string) {
-    cy.get("h1").should("contain", title);
-    return this;
-  }
-
-  checkTagsContent(tags: string[], isContain = true) {
+  checkTagsInputContainsValue(tags: string[], isContain = true) {
     tags.filter((tag) =>
       cy.get(".tag-list").should(isContain ? "contain" : "not.contain", tag)
     );
@@ -33,6 +28,35 @@ class NewArticlePageAssertions {
     cy.get("span.ng-scope")
       .find("button")
       .should(isContain ? "contain" : "not.contain", " Delete Article");
+  }
+
+  hasErrorContainsValue(alert: string, isContain = true) {
+    cy.get("li.ng-binding.ng-scope").should(
+      isContain ? "contain" : "note.contain",
+      alert
+    );
+    return this;
+  }
+
+  checkTitleInputContainsValue(title: string, isContain = true) {
+    cy.get("input[type=text]")
+      .eq(0)
+      .should(isContain ? "have.value" : "note.have.value", title);
+    return this;
+  }
+
+  checkAboutInputContainsValue(about: string, isContain = true) {
+    cy.get("input[type=text]")
+      .eq(1)
+      .should(isContain ? "have.value" : "note.have.value", about);
+    return this;
+  }
+
+  checkArticleInputContainsValue(article: string, isContain = true) {
+    cy.get("textarea").should(
+      isContain ? "have.value" : "note.have.value",
+      article
+    );
     return this;
   }
 }
