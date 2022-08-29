@@ -30,32 +30,34 @@ Given("The user opened the New Article page", () => {
 });
 
 When("The user fills a title", () => {
-  newArticlePageActions.addTitle(article.title);
+  newArticlePageActions.typeInTitleInput(article.title);
 });
 
 When("The user fills an about content", () => {
-  newArticlePageActions.addAbout(article.description);
+  newArticlePageActions.typeInAboutInput(article.description);
 });
 
 When("The user fills an article content", () => {
-  newArticlePageActions.addArticle(article.body);
+  newArticlePageActions.typeInArticleInput(article.body);
 });
 
 When("The user fills a tag", () => {
-  newArticlePageActions.addTags(article.tagList.map((tag) => `${tag}{enter}`));
+  newArticlePageActions.typeInTagsInput(
+    article.tagList.map((tag) => `${tag}{enter}`)
+  );
 });
 
 When("The user clicks on Publish Article button", () => {
-  newArticlePageActions.clickPublishButton();
+  newArticlePageActions.clickOnPublishAeticleButton();
 });
 
 Then("The article name should be shown in the URL", () => {
   sharedAssertions.checkUrlContainsValue("article", true);
   newArticlePageAssertions
-    .checkingTitle(article.title)
-    .checkingArticleContent(article.body)
-    .checkingTags(article.tagList)
-    .checkingDeleteArticle();
+    .checkTitleContent(article.title)
+    .checkArticleContent(article.body)
+    .checkTagsInputContainsValue(article.tagList)
+    .checkDeleteArticle();
 });
 
 afterEach(() => {

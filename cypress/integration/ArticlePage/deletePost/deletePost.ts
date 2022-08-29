@@ -47,7 +47,7 @@ Given("The user was at Article page", () => {
 });
 
 When("The user clicks on the Delete Article button", () => {
-  articlePageActions.clickOnDeleteArticle();
+  articlePageActions.clickOnDeleteArticleButton();
 });
 
 Then("The post should be deleted", () => {

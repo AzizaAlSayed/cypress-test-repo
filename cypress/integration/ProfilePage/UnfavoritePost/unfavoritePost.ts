@@ -51,7 +51,7 @@ Given("The user opened the Favorited tab from their profile page", () => {
 });
 
 When("The user clicks on unfavorite button", () => {
-  profileActions.clickOnFavorite();
+  profileActions.clickOnFavoriteButton();
 });
 
 Then(
