@@ -11,22 +11,23 @@ class NewArticlePageAssertions {
     return this;
   }
 
-  checkArticleContent(articleContent: string) {
+  checkArticleContent(articleContent: string, isContain = true) {
     cy.get("div[ng-bind-html='::$ctrl.article.body']").should(
-      "contain",
+      isContain ? "contain" : "not.contain",
       articleContent
     );
     return this;
   }
 
-  checkCommentArea() {
-    cy.get("textarea").should("be.empty");
+  checkCommentAreaContent(isContain = false) {
+    cy.get("textarea").should(isContain ? "not.be.empty" : "be.empty");
     return this;
   }
 
-  checkDeleteArticle() {
-    cy.get("span.ng-scope").find("button").should("contain", " Delete Article");
-    return this;
+  checkDeleteArticle(isContain = true) {
+    cy.get("span.ng-scope")
+      .find("button")
+      .should(isContain ? "contain" : "not.contain", " Delete Article");
   }
 
   hasErrorContainsValue(alert: string, isContain = true) {
